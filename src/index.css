@@ -1,0 +1,25 @@
+:root{
+  --gold: #c9a24a;
+  --gold-dark: #a8842f;
+}
+
+*{ box-sizing: border-box; }
+body{
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: #111;
+}
+
+.btn{
+  border: 2px solid black;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn:hover{
+  border-color: var(--gold-dark);
+}

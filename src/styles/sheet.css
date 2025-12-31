@@ -1,0 +1,962 @@
+:root{
+  --bg:#0b0b0b;
+  --fg:#eaeaea;
+  --gold:#d6b35a;
+
+  --vida:#b22121;
+  --mana:#2a63c9;
+}
+
+/* fundo fixo */
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  min-height:100%;
+  background-color:#000;
+  background-image: radial-gradient(ellipse at center, #161616 0%, #0b0b0b 55%, #000 100%);
+  background-attachment: fixed;
+  color:var(--fg);
+}
+
+#root{ min-height:100vh; background:transparent; }
+*{ box-sizing:border-box; }
+
+/* ========= REMOVE SETINHAS DO INPUT NUMBER ========= */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"]{
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+/* =================================================== */
+
+.sheet{
+  width:100%;
+  max-width:1200px;
+  margin:18px auto 70px;
+  padding:0 16px;
+}
+
+/* IDENTIFICAÇÃO */
+.idLine{
+  display:grid;
+  grid-template-columns:repeat(5, minmax(0, 1fr));
+  gap:14px;
+  margin-bottom:14px;
+  padding-bottom:10px;
+  border-bottom:1px solid rgba(214,179,90,0.18);
+}
+
+.idField span{
+  font-size:10px;
+  letter-spacing:1px;
+  opacity:.75;
+}
+
+.idField input{
+  width:100%;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid rgba(214,179,90,0.22);
+  color:var(--fg);
+  padding:6px 0;
+  outline:none;
+}
+
+.idField input:focus{
+  border-bottom-color: rgba(214,179,90,0.65);
+}
+
+/* GRID PRINCIPAL */
+.layout3{
+  display:grid;
+  grid-template-columns:300px minmax(0, 1fr) 360px;
+  gap:18px;
+  align-items:start;
+}
+
+.left,.center,.right{ min-width:0; }
+
+/* ATRIBUTOS */
+.attrs{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:10px;
+}
+
+.attr{
+  background: rgba(255,255,255,0.03);
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(214,179,90,0.10);
+}
+
+.attr span{
+  display:block;
+  font-size:11px;
+  font-weight:750;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+
+.attr div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.attr b{ font-size:13px; font-weight:900; }
+
+.attr input{
+  width:54px;
+  height:30px;
+  border-radius:9px;
+  background: rgba(0,0,0,0.35);
+  border:1px solid rgba(214,179,90,0.18);
+  color:var(--fg);
+  text-align:center;
+  outline:none;
+}
+
+.attr input:focus{ border-color: rgba(214,179,90,0.55); }
+
+/* ===== VIDA/MANA estilo Ordem ===== */
+.barBlock{
+  margin-top:14px;
+}
+
+.barTitle{
+  margin:0 0 8px;
+  font-size:11px;
+  letter-spacing:1px;
+  opacity:.95;
+  text-align:left;
+}
+
+.barOrdem{
+  position:relative;
+  height:46px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+}
+
+.barOrdem.vida{ background: rgba(178,33,33,0.95); }
+.barOrdem.mana{ background: rgba(42,99,201,0.95); }
+
+.barOrdem::after{
+  content:"";
+  position:absolute;
+  right:0; top:0; bottom:0;
+  width: calc(100% - var(--pct, 100%));
+  background: rgba(0,0,0,0.45);
+  pointer-events:none;
+}
+
+/* ✅ layout EXACT igual print (setas nos cantos + valor no meio) */
+.barCenter{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 0 10px;
+  color:#fff;
+  font-weight:900;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.55);
+}
+
+.barPad{
+  display:flex;
+  align-items:center;
+  gap:0;
+  height:30px;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.30);
+  background: rgba(0,0,0,0.18);
+}
+
+.barBtn{
+  width:30px;
+  height:30px;
+  border:none;
+  background: transparent;
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+  font-size:16px;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+}
+
+.barBtn:hover{
+  background: rgba(0,0,0,0.18);
+}
+
+.barBtn:active{
+  transform: translateY(1px);
+}
+
+.barBtn + .barBtn{
+  border-left:1px solid rgba(255,255,255,0.22);
+}
+
+/* ✅ valor do meio (igual print) */
+.barValue{
+  min-width: 130px;
+  height:30px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.30);
+  background: rgba(0,0,0,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 12px;
+}
+
+/* modo “texto” */
+.barValueText{
+  font-weight: 900;
+  font-size:14px;
+  letter-spacing: .3px;
+}
+
+/* modo “editar” (input discreto, sem cara de input) */
+.barValue input{
+  width:62px;
+  height:22px;
+  border:none;
+  outline:none;
+  background: transparent;
+  color:#fff;
+  font-weight:900;
+  font-size:14px;
+  text-align:center;
+}
+
+.barSlash{
+  opacity:.95;
+  font-weight:900;
+}
+
+/* ===== PERÍCIAS ===== */
+.skillsTitle{
+  text-align:center;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:1px;
+  color:var(--gold);
+  margin:4px 0 10px;
+}
+
+.skillsHeader{
+  display:grid;
+  grid-template-columns:22px 1fr 96px 52px;
+  gap:12px;
+  padding:0 10px;
+  margin-bottom:6px;
+  font-size:10px;
+  letter-spacing:1px;
+  opacity:.72;
+  white-space:nowrap;
+}
+
+.skillsList{
+  display:grid;
+  gap:6px;
+}
+
+.skill{
+  display:grid;
+  grid-template-columns:22px 1fr 96px 52px;
+  gap:12px;
+  align-items:center;
+  padding:7px 10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
+
+.skill:hover{
+  border-color: rgba(214,179,90,0.22);
+  background: rgba(214,179,90,0.06);
+}
+
+.skill input[type="checkbox"]{
+  width:15px;
+  height:15px;
+  accent-color: var(--gold);
+}
+
+.skill span{
+  font-size:12px;
+  font-weight:650;
+}
+
+.skill select{
+  height:26px;
+  border-radius:9px;
+  background: rgba(0,0,0,0.35);
+  border:1px solid rgba(214,179,90,0.18);
+  color:var(--fg);
+  outline:none;
+  font-size:12px;
+  width:100%;
+}
+
+.skill b{
+  text-align:right;
+  color:var(--gold);
+  font-weight:900;
+  font-size:12px;
+}
+
+/* ===== DIREITA (TABS) ===== */
+.rightWide{
+  justify-self: end;
+}
+
+.rightTabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.rightTabs button{
+  flex:1 1 calc(50% - 10px);
+  text-align:center;
+  padding:10px 10px;
+  border-radius:12px;
+  background: rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.10);
+  color:var(--fg);
+  cursor:pointer;
+  opacity:.75;
+  font-weight:650;
+}
+
+.rightTabs button:hover{
+  border-color: rgba(214,179,90,0.25);
+  opacity:.95;
+}
+
+.rightTabs .active{
+  border-color: rgba(214,179,90,0.55);
+  color:var(--gold);
+  opacity:1;
+}
+
+.tabContent{
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
+
+/* ===== BOTÃO “ADD” ===== */
+.ataqueAdd{
+  width:100%;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(214,179,90,0.30);
+  background: rgba(214,179,90,0.08);
+  color: var(--gold);
+  font-weight: 800;
+  cursor:pointer;
+  margin-bottom: 10px;
+}
+
+.ataqueAdd:hover{
+  border-color: rgba(214,179,90,0.50);
+  background: rgba(214,179,90,0.12);
+}
+
+/* ===== LISTAS ===== */
+.ataquesList{
+  display:grid;
+  gap:10px;
+}
+
+/* ===== CARD PADRÃO (ATAQUES/PODERES) ===== */
+.ataqueCard{
+  border-radius:14px;
+  padding:10px;
+  overflow:hidden;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+
+.ataqueCard:hover{
+  border-color: rgba(214,179,90,0.22);
+  background: rgba(214,179,90,0.04);
+  transform: translateY(-1px);
+}
+
+.ataqueHeader{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  cursor:pointer;
+  user-select:none;
+}
+
+.ataqueSeta{
+  display:inline-flex;
+  width:20px;
+  height:20px;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color: rgba(214,179,90,0.95);
+  transition: transform .16s ease;
+  transform-origin: 50% 50%;
+}
+
+.ataqueSeta.aberta{
+  transform: rotate(180deg);
+}
+
+.ataqueResumo{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0;
+}
+
+.ataqueResumo b{
+  font-size:13px;
+  font-weight:900;
+  color: #fff;
+}
+
+.ataqueResumo span{
+  font-size:11px;
+  opacity:.75;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.ataqueBody{
+  margin-top:10px;
+  padding-top:10px;
+  border-top: 1px solid rgba(214,179,90,0.18);
+  display:grid;
+  gap:8px;
+  font-size:12px;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.ataqueActions{
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ghostBtn{
+  border:1px solid rgba(214,179,90,0.22);
+  background: rgba(214,179,90,0.06);
+  color: var(--gold);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: 700;
+  opacity: .9;
+}
+.ghostBtn:hover{
+  opacity: 1;
+  border-color: rgba(214,179,90,0.38);
+  background: rgba(214,179,90,0.10);
+}
+
+.danger{
+  border:none;
+  background: rgba(178,33,33,0.95);
+  color:#fff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor:pointer;
+  font-weight:800;
+}
+.danger:hover{
+  filter: brightness(1.08);
+}
+
+/* ===== PODERES ===== */
+.poderLinha{
+  margin-bottom:10px;
+  opacity:.95;
+}
+
+.poderDesc{
+  white-space: pre-wrap;
+  line-height: 1.35;
+  opacity: .95;
+  margin-bottom: 12px;
+
+  max-height: 180px;
+  overflow: auto;
+  padding-right: 6px;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.poderDesc::-webkit-scrollbar{
+  width: 8px;
+}
+.poderDesc::-webkit-scrollbar-thumb{
+  background: rgba(214,179,90,0.18);
+  border-radius: 10px;
+}
+.poderDesc::-webkit-scrollbar-thumb:hover{
+  background: rgba(214,179,90,0.28);
+}
+.poderDesc{
+  scrollbar-width: thin;
+  scrollbar-color: rgba(214,179,90,0.22) transparent;
+}
+
+/* ===== MODAIS ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,0.70);
+  backdrop-filter: blur(6px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+}
+
+.modal{
+  width:min(720px, calc(100% - 26px));
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.10);
+  background: rgba(20,20,20,0.94);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.60);
+  padding:16px;
+}
+
+.modal h3{
+  margin:0 0 12px;
+  font-size:16px;
+  font-weight:900;
+  color:#fff;
+}
+
+.grid1{
+  display:grid;
+  gap:10px;
+}
+
+.grid2{
+  display:grid;
+  gap:10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.modal input,
+.modal select,
+.modal textarea{
+  width:100%;
+  height:38px;
+  border-radius:12px;
+  background: rgba(0,0,0,0.42);
+  border:1px solid rgba(214,179,90,0.20);
+  color:var(--fg);
+  outline:none;
+  padding:0 10px;
+  font-weight:650;
+  font-family: inherit;
+}
+
+.modal textarea{
+  height:auto;
+  min-height:140px;
+  resize: vertical;
+  padding:10px 10px;
+}
+
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus{
+  border-color: rgba(214,179,90,0.55);
+  box-shadow: 0 0 0 2px rgba(214,179,90,0.10);
+}
+
+.modalBtns{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:12px;
+}
+
+.modalBtns button{
+  height:38px;
+  padding:0 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color:var(--fg);
+  cursor:pointer;
+  font-weight:800;
+}
+
+.modalBtns button:hover{
+  border-color: rgba(255,255,255,0.26);
+  background: rgba(255,255,255,0.08);
+}
+
+.hint{
+  font-size:11px;
+  opacity:.70;
+}
+
+/* ===== MAGIAS (mantive o teu compact) ===== */
+.magiaTop{
+  display:grid;
+  gap:10px;
+}
+
+.magiaStat{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+
+.magiaStat span{
+  font-size:11px;
+  letter-spacing:1px;
+  opacity:.85;
+  font-weight:900;
+}
+
+.magiaStat input{
+  width:92px;
+  height:30px;
+  border-radius:10px;
+  border:1px solid rgba(214,179,90,0.20);
+  background: rgba(0,0,0,0.35);
+  color:var(--fg);
+  text-align:center;
+  outline:none;
+  font-weight:900;
+}
+
+.magiaStat input:focus{
+  border-color: rgba(214,179,90,0.55);
+}
+
+.spellCard{
+  --elem: #8d49ff;
+  --elem2: #8d49ff;
+
+  border-radius:14px;
+  padding:10px;
+  overflow:hidden;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.spellInferno{
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.spellHeader{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.spellSeta{
+  display:inline-flex;
+  width:18px;
+  height:18px;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color: var(--elem);
+  transition: transform .16s ease;
+}
+.spellSeta.aberta{ transform: rotate(180deg); }
+
+.spellEquip{
+  width:14px;
+  height:14px;
+  border-radius:4px;
+  border:2px solid var(--elem);
+  background: transparent;
+  display:inline-block;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  outline:none;
+}
+.spellEquip:checked{
+  background: var(--elem);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset, 0 0 10px rgba(0,0,0,0.25);
+}
+
+.spellDot{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  border: 2px solid var(--elem);
+  box-shadow: 0 0 10px rgba(0,0,0,0.35);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0.00) 55%),
+    linear-gradient(180deg, var(--elem), var(--elem2));
+}
+
+.spellNameBox{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.spellName{
+  font-size:12px;
+  line-height:1.1;
+  font-weight:900;
+  color:#fff;
+}
+
+.spellMini{
+  font-size:10px;
+  opacity:.65;
+  color: var(--elem);
+  margin-top:-2px;
+}
+
+.spellBody{
+  margin-top:8px;
+  padding-top:10px;
+  border-top: 2px solid var(--elem);
+  display:grid;
+  gap:8px;
+}
+
+.spellRow{
+  display:flex;
+  gap:8px;
+  align-items:baseline;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.spellLbl{
+  min-width:86px;
+  font-size:11px;
+  font-weight:900;
+  color: var(--elem);
+  opacity:.95;
+}
+
+.spellVal{
+  font-size:11px;
+  opacity:.95;
+  line-height:1.35;
+}
+
+.spellGrid2{
+  display:grid;
+  grid-template-columns: 1fr !important;
+  gap:8px;
+}
+
+.spellDesc{
+  white-space: pre-wrap;
+  line-height:1.35;
+  opacity:.95;
+
+  font-size:11px;
+  max-height: 140px;
+  overflow:auto;
+  padding-right:6px;
+
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.spellDesc::-webkit-scrollbar{
+  width: 8px;
+}
+.spellDesc::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.16);
+  border-radius: 10px;
+}
+.spellDesc::-webkit-scrollbar-thumb:hover{
+  background: rgba(255,255,255,0.22);
+}
+
+/* RESPONSIVO */
+@media (max-width:980px){
+  .idLine{ grid-template-columns:1fr 1fr; }
+  .layout3{ grid-template-columns:1fr; }
+  .rightWide{ justify-self: stretch; }
+}
+
+@media (max-width:520px){
+  .rightTabs button{ flex:1 1 100%; }
+  .grid2{ grid-template-columns: 1fr; }
+  .spellLbl{ min-width:80px; }
+}
+
+/* ✅ FUNDO DEGRADÊ POR ELEMENTO (spellCard) */
+.spellCard{
+  background:
+    radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--elem) 28%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 75% 0%, color-mix(in srgb, var(--elem2) 18%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, rgba(255,255,255,0.018), rgba(0,0,0,0.22));
+  border-color: color-mix(in srgb, var(--elem) 22%, rgba(255,255,255,0.06));
+}
+
+.spellHeader:hover .spellDot{
+  box-shadow: 0 0 14px color-mix(in srgb, var(--elem) 55%, transparent);
+}
+
+/* =========================
+   MISTÉRIOS — ESTÉTICA MAGIA
+   ========================= */
+
+.mysteryCard{
+  border-radius:14px;
+  padding:10px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+
+  background:
+    radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--elem) 28%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 75% 0%, color-mix(in srgb, var(--elem2) 18%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, rgba(255,255,255,0.018), rgba(0,0,0,0.22));
+
+  border-color: color-mix(in srgb, var(--elem) 22%, rgba(255,255,255,0.06));
+}
+
+.mysteryHeader{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.mysterySeta{
+  display:inline-flex;
+  width:18px;
+  height:18px;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color: var(--elem);
+  transition: transform .16s ease;
+}
+.mysterySeta.aberta{ transform: rotate(180deg); }
+
+.mysteryDot{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  border: 2px solid var(--elem);
+  box-shadow: 0 0 10px rgba(0,0,0,0.35);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0.00) 55%),
+    linear-gradient(180deg, var(--elem), var(--elem2));
+}
+
+.mysteryNameBox{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.mysteryName{
+  font-size:12px;
+  line-height:1.1;
+  font-weight:900;
+  color:#fff;
+}
+
+.mysteryMini{
+  font-size:10px;
+  opacity:.65;
+  color: var(--elem);
+  margin-top:-2px;
+}
+
+.mysteryBody{
+  margin-top:8px;
+  padding-top:10px;
+  border-top: 2px solid var(--elem);
+  display:grid;
+  gap:8px;
+}
+
+.mysteryDesc{
+  white-space: pre-wrap;
+  line-height:1.35;
+  opacity:.95;
+  font-size:11px;
+  max-height: 180px;
+  overflow:auto;
+  padding-right:6px;
+
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.mysteryDesc::-webkit-scrollbar{ width: 8px; }
+.mysteryDesc::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.16);
+  border-radius: 10px;
+}
+.mysteryDesc::-webkit-scrollbar-thumb:hover{
+  background: rgba(255,255,255,0.22);
+}
+
+/* ✅ MAGIAS — LINHAS ALINHADAS (label | valor) */
+.spellInfoGrid{
+  display:grid;
+  gap:8px;
+}
+
+.spellLine{
+  display:grid;
+  grid-template-columns: 92px 1fr;
+  gap:10px;
+  align-items:baseline;
+}
+
+.spellDescBlock{
+  display:grid;
+  gap:6px;
+  margin-top: 4px;
+}
