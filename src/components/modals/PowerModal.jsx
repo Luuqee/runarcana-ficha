@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function PowerModal({
   open,
   title,
@@ -6,21 +8,27 @@ export default function PowerModal({
   onClose,
   onSave,
 }) {
-  if (!open) return null;
-
   const set = (p) => setNovoPoder((x) => ({ ...x, ...p }));
 
+  useEffect(() => {
+    if (!open) return;
+
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose?.();
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
   return (
-    <div className="rkModalOverlay" onMouseDown={onClose}>
+    <div className="rkModalOverlay" onMouseDown={onClose} role="dialog" aria-modal="true">
       <div className="rkModalCard" onMouseDown={(e) => e.stopPropagation()}>
         <div className="rkModalHeader">
           <h3>{title || "Adicionar Poder"}</h3>
-          <button
-            type="button"
-            className="rkModalX"
-            onClick={onClose}
-            aria-label="Fechar"
-          >
+          <button type="button" className="rkModalX" onClick={onClose} aria-label="Fechar">
             ✕
           </button>
         </div>

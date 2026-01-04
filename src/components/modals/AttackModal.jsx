@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function AttackModal({
   open,
   title,
@@ -11,12 +13,23 @@ export default function AttackModal({
   TIPOS_DANO,
   ALCANCES_ATAQUE,
 }) {
-  if (!open) return null;
-
   const set = (p) => setNovoAtaque((a) => ({ ...a, ...p }));
 
+  useEffect(() => {
+    if (!open) return;
+
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose?.();
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
   return (
-    <div className="rkModalOverlay" onMouseDown={onClose}>
+    <div className="rkModalOverlay" onMouseDown={onClose} role="dialog" aria-modal="true">
       <div className="rkModalCard" onMouseDown={(e) => e.stopPropagation()}>
         <div className="rkModalHeader">
           <h3>{title || "Novo Ataque"}</h3>
@@ -90,7 +103,10 @@ export default function AttackModal({
 
             <label className="rkField">
               <span>Crítico</span>
-              <select value={novoAtaque?.critico ?? CRITICOS?.[0] ?? ""} onChange={(e) => set({ critico: e.target.value })}>
+              <select
+                value={novoAtaque?.critico ?? CRITICOS?.[0] ?? ""}
+                onChange={(e) => set({ critico: e.target.value })}
+              >
                 {CRITICOS.map((c) => (
                   <option key={c} value={c}>
                     {c}
