@@ -14,6 +14,85 @@ export const AREAS = ["Cone", "Cilindro", "Cubo", "Esfera", "Linha"];
 export const DURACOES = ["Instantânea", "Concentrada"];
 export const CONJURACOES = ["Ação", "Ação Bônus", "Ataque", "Reação", "Maior"];
 
+// ✅ TIPOS DE DANO (RUNAS)
+export const TIPOS_DANO_RUNAS = [
+  "Contundente",
+  "Cortante",
+  "Perfurante",
+  "Ácido",
+  "Elétrico",
+  "Energético",
+  "Gélido",
+  "Ígneo",
+  "Radiante",
+  "Sombrio",
+  "Trovejante",
+  "Venenoso",
+  "Necrótico",
+  "Psíquico",
+];
+
+export const DANOS_FISICOS = ["Contundente", "Cortante", "Perfurante"];
+export const DANOS_ELEMENTAIS = TIPOS_DANO_RUNAS.filter((d) => !DANOS_FISICOS.includes(d));
+
+// ✅ TABELA DADO DE PULSO (mínimo travado depois no cálculo)
+export const PULSO_DICE_TABLE = {
+  2: { base: "d4", pulso: "1d4" },
+  3: { base: "d6", pulso: "1d6" },
+  4: { base: "d8", pulso: "2d4" },
+  5: { base: "d10", pulso: "2d6" },
+  6: { base: "d12", pulso: "3d4" },
+};
+
+// ✅ PULSOS + CORES CERTINHAS
+export const PULSOS = [
+  {
+    key: "esmeralda",
+    label: "Pulso Esmeralda",
+    c1: "#2bd66a", // verde esmeralda
+    c2: "#0b5a2a",
+    desc:
+      "Ao escolher o Pulso Esmeralda, você deve escolher um dano físico e um dano elemental entre os tipos de dano. Após um descanso longo, você pode jogar seus dados de Pulso. Até o próximo descanso longo, o resultado será sua Redução de Dano (RD) dos tipos escolhidos. No 9º nível você escolhe um novo dano elemental e no 17º nível escolhe um terceiro. A partir do nível 11, essa redução também se aplica a dano mágico dos tipos escolhidos.",
+    needs: { fisico: true, elemental: true, elemental2: true, elemental3: true },
+  },
+  {
+    key: "rubi",
+    label: "Pulso Rubi",
+    c1: "#ff2a2a", // vermelho rubi
+    c2: "#5a0b0b",
+    desc:
+      "Ao escolher o Pulso Rubi, você escolhe 1 tipo de dano. Após um descanso longo, você rola seus dados de Pulso. Até o próximo descanso longo, uma vez por turno ao causar esse tipo de dano, você adiciona o resultado ao dano causado. Crítico multiplica esse adicional. No nível 11, também se aplica a dano mágico do mesmo tipo.",
+    needs: { single: true },
+  },
+  {
+    key: "diamante",
+    label: "Pulso Diamante",
+    c1: "#d9fbff", // branco/azulado claro
+    c2: "#7fd3ff",
+    desc:
+      "Após um descanso longo, você rola seu dado de Pulso. Até o próximo descanso longo, o valor obtido é adicionado às curas que você realizar em terceiros ou, uma vez por turno, a uma cura que você receba. Não ativa com pontos de vida temporários.",
+    needs: {},
+  },
+  {
+    key: "ametista",
+    label: "Pulso Ametista",
+    c1: "#a855ff", // roxo ametista
+    c2: "#2d0d66",
+    desc:
+      "Ao escolher esse pulso, você escolhe entre Vida, Mana ou Ki. Ao abater um alvo com ND adequado, você recupera pontos do recurso escolhido conforme a regra do pulso.",
+    needs: { resource: true },
+  },
+  {
+    key: "safira",
+    label: "Pulso Safira",
+    c1: "#1e6bff", // azul safira forte
+    c2: "#0b2a66",
+    desc:
+      "Após um descanso longo, você rola seu dado de Pulso. O valor vira seus pontos de Pulso. Você gasta pontos para somar/subtrair rolagens e também para amplificar/reduzir dano (cada ponto gasto vale seu bônus de proficiência).",
+    needs: {},
+  },
+];
+
 export const ELEMENTOS = [
   { key: "sombrio", label: "Sombrio", c1: "#7a3dff", c2: "#2d0d66" },
   { key: "agua", label: "Água", c1: "#2fd5c8", c2: "#0c5f63" },
@@ -84,12 +163,44 @@ export const defaultNovaMagia = {
 
 export const defaultNovoMisterio = { misterioKey: "" };
 
+// ✅ defaults do modal de runa
+export const defaultNovaRuna = {
+  nome: "",
+  tipo: "Runa", // Runa | Runessência
+  pulso: "esmeralda",
+  prereq: "",
+  sinergia: "",
+  uso: "",
+  maestriaA: "",
+  maestriaB: "",
+  m1Escolha: "", // "A" | "B" | ""
+  m2Escolha: "", // "A" | "B" | ""
+};
+
 export const defaultState = {
   tab: "magias",
-  info: { jogador: "", personagem: "", classe: "", origem: "", regiao: "" },
+  // ✅ adicionei NIVEL aqui (pra ficar na idLine sem refatorar tudo)
+  info: { jogador: "", nivel: 1, personagem: "", classe: "", origem: "", regiao: "" },
 
-  // ✅ NOVO: prof editável (antes era só constante)
   prof: PROF,
+
+  // ✅ Runas (pulso + lista)
+  runas: {
+    pulso: null, // { key, ... }
+    pulsoRoll: "", // resultado rolado no descanso
+    escolhas: {
+      // esmeralda
+      fisico: "",
+      elemental1: "",
+      elemental2: "",
+      elemental3: "",
+      // rubi
+      danoRubi: "",
+      // ametista
+      recurso: "",
+    },
+    lista: [], // runas/runessências adicionadas
+  },
 
   attrs: { FOR: 10, DES: 10, CON: 10, INT: 10, SAB: 10, CAR: 10 },
   skills: [
@@ -119,4 +230,5 @@ export const defaultState = {
   magias: [],
   magiaStats: { cd: 0, acerto: 0 },
   misterios: [],
+  
 };

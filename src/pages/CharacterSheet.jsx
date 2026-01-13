@@ -32,11 +32,14 @@ import TabPowers from "../components/sheets/TabPowers.jsx";
 import TabSpells from "../components/sheets/TabSpells.jsx";
 import TabMysteries from "../components/sheets/TabMysteries.jsx";
 import TabDescription from "../components/sheets/TabDescription.jsx";
+import TabRunes from "../components/sheets/TabRunes.jsx";
 
 import AttackModal from "../components/modals/AttackModal.jsx";
 import PowerModal from "../components/modals/PowerModal.jsx";
 import SpellModal from "../components/modals/SpellModal.jsx";
 import MysteryModal from "../components/modals/MysteryModal.jsx";
+import PulseModal from "../components/modals/PulseModal.jsx";
+import RuneModal from "../components/modals/RuneModal.jsx";
 
 export default function CharacterSheet() {
   const [state, setState] = useState(() => loadSheet(STORAGE_KEY, defaultState));
@@ -61,6 +64,14 @@ export default function CharacterSheet() {
   const [showMisterioModal, setShowMisterioModal] = useState(false);
   const [novoMisterio, setNovoMisterio] = useState(defaultNovoMisterio);
 
+  // ✅ RUNAS (UI)
+  const [openPulse, setOpenPulse] = useState(null);
+  const [openRuna, setOpenRuna] = useState(null);
+
+  const [showPulseModal, setShowPulseModal] = useState(false);
+  const [showRuneModal, setShowRuneModal] = useState(false);
+  const [editRuneId, setEditRuneId] = useState(null);
+
   useEffect(() => setLoaded(true), []);
   useEffect(() => {
     if (!loaded) return;
@@ -79,10 +90,16 @@ export default function CharacterSheet() {
     magiaStats,
     misterios,
     tab,
-    prof, // ✅ NOVO (bônus de proficiência editável no state)
+    prof,
+    runas,
+    ca,
+    escudo,
   } = state;
 
   const update = (p) => setState((s) => ({ ...s, ...p }));
+
+  // ✅ nível vem do info.nivel
+  const nivel = Number(info?.nivel || 1);
 
   // --------- VIDA / MANA (clamp + %)
   const vidaC = clampBar(vida);
@@ -244,7 +261,119 @@ export default function CharacterSheet() {
   };
   const removeMisterio = (id) => update({ misterios: (misterios || []).filter((m) => m.id !== id) });
 
-  // ESC fecha
+  // --------- RUNAS (funções)
+  const abrirModalPulso = () => setShowPulseModal(true);
+  const fecharModalPulso = () => setShowPulseModal(false);
+
+  const salvarPulso = (key) => {
+    update({
+      runas: {
+        ...(runas || {}),
+        pulso: { key },
+      },
+    });
+    setOpenPulse(key);
+    fecharModalPulso();
+  };
+
+  const removerPulso = () => {
+    update({
+      runas: {
+        ...(runas || {}),
+        pulso: null,
+        pulsoRoll: "",
+        escolhas: {
+          fisico: "",
+          elemental1: "",
+          elemental2: "",
+          elemental3: "",
+          danoRubi: "",
+          recurso: "",
+        },
+      },
+    });
+    setOpenPulse(null);
+  };
+
+  const abrirModalRuna = (id = null) => {
+    setEditRuneId(id);
+    setShowRuneModal(true);
+  };
+
+  const fecharModalRuna = () => {
+    setShowRuneModal(false);
+    setEditRuneId(null);
+  };
+
+const salvarRuna = (form) => {
+  if (!form?.nome?.trim()) return;
+
+  const runasSafe = runas || {
+    pulso: null,
+    pulsoRoll: "",
+    escolhas: {
+      fisico: "",
+      elemental1: "",
+      elemental2: "",
+      elemental3: "",
+      danoRubi: "",
+      recurso: "",
+    },
+    lista: [],
+  };
+
+  const list = runasSafe.lista || [];
+
+  if (editRuneId) {
+    update({
+      runas: {
+        ...runasSafe,
+        lista: list.map((r) => (r.id === editRuneId ? { ...r, ...form, id: editRuneId } : r)),
+      },
+    });
+    setOpenRuna(editRuneId); // ✅ abre depois de editar
+  } else {
+    const id = crypto.randomUUID();
+    update({
+      runas: {
+        ...runasSafe,
+        lista: [...list, { id, ...form }],
+      },
+    });
+    setOpenRuna(id); // ✅ abre depois de criar
+  }
+
+  fecharModalRuna();
+};
+
+
+  const removerRuna = (id) => {
+    const list = runas?.lista || [];
+    update({
+      runas: {
+        ...(runas || {}),
+        lista: list.filter((r) => r.id !== id),
+      },
+    });
+    if (openRuna === id) setOpenRuna(null);
+  };
+
+  const editarRuna = (id, patch) => {
+    const list = runas?.lista || [];
+    update({
+      runas: {
+        ...(runas || {}),
+        lista: list.map((r) => (r.id === id ? { ...r, ...patch } : r)),
+      },
+    });
+  };
+
+  const initialRune = useMemo(() => {
+    if (!editRuneId) return null;
+    return (runas?.lista || []).find((r) => r.id === editRuneId) || null;
+  }, [editRuneId, runas]);
+
+  // ESC fecha (inclui runas)
   useEffect(() => {
     const onKey = (e) => {
       if (e.key !== "Escape") return;
@@ -252,11 +381,13 @@ export default function CharacterSheet() {
       if (showPoderModal) fecharModalPoder();
       if (showMagiaModal) fecharModalMagia();
       if (showMisterioModal) fecharModalMisterio();
+      if (showPulseModal) fecharModalPulso();
+      if (showRuneModal) fecharModalRuna();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAtaqueModal, showPoderModal, showMagiaModal, showMisterioModal]);
+  }, [showAtaqueModal, showPoderModal, showMagiaModal, showMisterioModal, showPulseModal, showRuneModal]);
 
   return (
     <div className="sheet">
@@ -268,8 +399,16 @@ export default function CharacterSheet() {
             <input
               name={`info_${k}`}
               value={info[k]}
-              onChange={(e) => update({ info: { ...info, [k]: e.target.value } })}
+              onChange={(e) =>
+                update({
+                  info: {
+                    ...info,
+                    [k]: k === "nivel" ? Number(e.target.value || 1) : e.target.value,
+                  },
+                })
+              }
               autoComplete="off"
+              inputMode={k === "nivel" ? "numeric" : undefined}
             />
           </div>
         ))}
@@ -296,10 +435,9 @@ export default function CharacterSheet() {
             ))}
           </div>
 
-          {/* ✅ BÔNUS DE PROFICIÊNCIA (aba abaixo dos atributos) */}
+          {/* BÔNUS DE PROFICIÊNCIA */}
           <div className="profBlock">
             <div className="profTitle">BÔNUS DE PROFICIÊNCIA</div>
-
             <div className="profHex">
               <input
                 name="prof"
@@ -312,7 +450,39 @@ export default function CharacterSheet() {
             </div>
           </div>
 
-          {/* VIDA (✅ AGORA BATE COM TEU CSS) */}
+{/* ✅ CA / ESCUDO (só dois campos) */}
+<div className="caBlock">
+  <div className="caTitle">CLASSE DE ARMADURA</div>
+
+  <div className="caGrid2">
+    <div className="caField">
+      <span>CA</span>
+      <input
+        name="ca"
+        type="number"
+        value={ca}
+        onChange={(e) => update({ ca: e.target.value })}
+        inputMode="numeric"
+        autoComplete="off"
+      />
+    </div>
+
+    <div className="caField">
+      <span>Escudo</span>
+      <input
+        name="escudo"
+        type="number"
+        value={escudo}
+        onChange={(e) => update({ escudo: e.target.value })}
+        inputMode="numeric"
+        autoComplete="off"
+      />
+    </div>
+  </div>
+</div>
+
+
+          {/* VIDA */}
           <div className="barBlock">
             <h4 className="barTitle">VIDA</h4>
 
@@ -357,7 +527,7 @@ export default function CharacterSheet() {
             </div>
           </div>
 
-          {/* MANA (✅ AGORA BATE COM TEU CSS) */}
+          {/* MANA */}
           <div className="barBlock">
             <h4 className="barTitle">MANA</h4>
 
@@ -415,9 +585,7 @@ export default function CharacterSheet() {
 
           <div className="skillsList">
             {skills.map((s, i) => {
-              // ✅ agora usa prof do state (editável), e só soma se treinado
               const bonus = mod(attrs[s.attr]) + (s.trained ? Number(prof || 0) : 0);
-
               return (
                 <div key={s.name} className="skill">
                   <input
@@ -504,6 +672,24 @@ export default function CharacterSheet() {
               />
             )}
 
+            {tab === "runas" && (
+              <TabRunes
+                runas={runas}
+                prof={prof}
+                nivel={nivel}
+                update={update}
+                openPulse={openPulse}
+                setOpenPulse={setOpenPulse}
+                openRuna={openRuna}
+                setOpenRuna={setOpenRuna}
+                abrirModalPulso={abrirModalPulso}
+                removerPulso={removerPulso}
+                abrirModalRuna={abrirModalRuna}
+                editarRuna={editarRuna}
+                removerRuna={removerRuna}
+              />
+            )}
+
             {tab === "descrição" && <TabDescription />}
           </div>
         </div>
@@ -556,6 +742,23 @@ export default function CharacterSheet() {
         onSave={salvarMisterio}
         MISTERIOS={MISTERIOS}
       />
+
+      <PulseModal
+        open={showPulseModal}
+        currentKey={runas?.pulso?.key || ""}
+        onClose={fecharModalPulso}
+        onSave={salvarPulso}
+      />
+
+      <RuneModal
+  key={editRuneId || "nova-runa"}  // ✅ força remontar quando trocar de runa / criar
+  open={showRuneModal}
+  title={editRuneId ? "Editar Runa / Runessência" : "Adicionar Runa / Runessência"}
+  onClose={fecharModalRuna}
+  onSave={salvarRuna}
+  initial={initialRune}
+/>
+
     </div>
   );
 }
