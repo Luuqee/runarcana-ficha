@@ -1,3 +1,5 @@
+/* src/styles/sheet.css */
+
 :root{
   --bg:#0b0b0b;
   --fg:#eaeaea;
@@ -1087,4 +1089,49 @@ input[type="number"]{
 /* responsivo modal */
 @media (max-width:520px){
   .rkGrid2, .rkGrid3{ grid-template-columns: 1fr; }
+}
+
+/* =========================
+   BÔNUS DE PROFICIÊNCIA (aba)
+   ========================= */
+.profBlock{
+  margin-top: 12px;
+  margin-bottom: 6px;
+  border-radius:14px;
+  padding:10px;
+  border:1px solid rgba(214,179,90,0.14);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(214,179,90,0.18) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.20));
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.profTitle{
+  font-size:10px;
+  letter-spacing:1px;
+  font-weight:900;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.profHex{
+  width: 86px;
+  height: 62px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  border:1px solid rgba(214,179,90,0.35);
+  background: rgba(0,0,0,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.profHex input{
+  width:70%;
+  border:none;
+  outline:none;
+  background: transparent;
+  color: var(--fg);
+  text-align:center;
+  font-weight:900;
+  font-size:18px;
 }

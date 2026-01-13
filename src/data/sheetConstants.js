@@ -1,3 +1,4 @@
+// src/data/sheetConstants.js
 export const STORAGE_KEY = "runarcana_sheet_v1";
 
 export const ATTRS = ["FOR", "DES", "CON", "INT", "SAB", "CAR"];
@@ -14,7 +15,6 @@ export const DURACOES = ["Instantânea", "Concentrada"];
 export const CONJURACOES = ["Ação", "Ação Bônus", "Ataque", "Reação", "Maior"];
 
 export const ELEMENTOS = [
-  // Mantive key/label, mas cores exatamente como você pediu
   { key: "sombrio", label: "Sombrio", c1: "#7a3dff", c2: "#2d0d66" },
   { key: "agua", label: "Água", c1: "#2fd5c8", c2: "#0c5f63" },
   { key: "fogo", label: "Fogo", c1: "#ff8a2a", c2: "#7a2a00" },
@@ -37,13 +37,11 @@ export const ELEMENTOS = [
 ];
 
 export const MISTERIOS = [
-  // Celestiais
   { key: "cronomancia", label: "Cronomancia", color1: "#d6b35a", color2: "#fff2a8", desc: "Cronomancia afeta o eixo do tempo do espaço-tempo..." },
   { key: "espacomancia", label: "Espaçomancia", color1: "#0b2a66", color2: "#1e6bff", desc: "Espaçomancia manipula o eixo espacial..." },
   { key: "gravitomancia", label: "Gravitomancia", color1: "#8a93a1", color2: "#3b3f4a", desc: "Gravitomancia estuda atração e repulsão..." },
   { key: "runomancia", label: "Runomancia", color1: "#bfe6ff", color2: "#2b7cff", desc: "Runomancia concentra-se na energia celestial e runas..." },
 
-  // Elementais gerais / Elementos (podem reutilizar cores dos elementos)
   { key: "agua", label: "Água", color1: "#2fd5c8", color2: "#0c5f63", desc: "O mistério da Água lida com cura, pressão e fluxo..." },
   { key: "artico", label: "Ártico", color1: "#2b7cff", color2: "#ffffff", desc: "Ártico une vida intensa e oposição para harmonia..." },
   { key: "cristal", label: "Cristal", color1: "#bfe6ff", color2: "#6bb6ff", desc: "Cristal conserva, protege e estabiliza estruturas..." },
@@ -89,6 +87,10 @@ export const defaultNovoMisterio = { misterioKey: "" };
 export const defaultState = {
   tab: "magias",
   info: { jogador: "", personagem: "", classe: "", origem: "", regiao: "" },
+
+  // ✅ NOVO: prof editável (antes era só constante)
+  prof: PROF,
+
   attrs: { FOR: 10, DES: 10, CON: 10, INT: 10, SAB: 10, CAR: 10 },
   skills: [
     { name: "Acrobacia", attr: "DES", trained: false },

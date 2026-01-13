@@ -1,3 +1,4 @@
+// src/pages/CharacterSheet.jsx
 import { useEffect, useMemo, useState } from "react";
 import "../styles/sheet.css";
 
@@ -78,6 +79,7 @@ export default function CharacterSheet() {
     magiaStats,
     misterios,
     tab,
+    prof, // ✅ NOVO (bônus de proficiência editável no state)
   } = state;
 
   const update = (p) => setState((s) => ({ ...s, ...p }));
@@ -135,7 +137,9 @@ export default function CharacterSheet() {
   const salvarAtaque = () => {
     if (!novoAtaque.nome?.trim() || !novoAtaque.dano?.trim()) return;
     if (editAtaqueId) {
-      update({ ataques: ataques.map((a) => (a.id === editAtaqueId ? { ...a, ...novoAtaque, id: editAtaqueId } : a)) });
+      update({
+        ataques: ataques.map((a) => (a.id === editAtaqueId ? { ...a, ...novoAtaque, id: editAtaqueId } : a)),
+      });
     } else {
       update({ ataques: [...ataques, { id: crypto.randomUUID(), ...novoAtaque }] });
     }
@@ -164,7 +168,9 @@ export default function CharacterSheet() {
   const salvarPoder = () => {
     if (!novoPoder.nome?.trim()) return;
     if (editPoderId) {
-      update({ poderes: poderes.map((p) => (p.id === editPoderId ? { ...p, ...novoPoder, id: editPoderId } : p)) });
+      update({
+        poderes: poderes.map((p) => (p.id === editPoderId ? { ...p, ...novoPoder, id: editPoderId } : p)),
+      });
     } else {
       update({ poderes: [...poderes, { id: crypto.randomUUID(), ...novoPoder }] });
     }
@@ -193,7 +199,9 @@ export default function CharacterSheet() {
   const salvarMagia = () => {
     if (!novaMagia.nome?.trim()) return;
     if (editMagiaId) {
-      update({ magias: magias.map((m) => (m.id === editMagiaId ? { ...m, ...novaMagia, id: editMagiaId } : m)) });
+      update({
+        magias: magias.map((m) => (m.id === editMagiaId ? { ...m, ...novaMagia, id: editMagiaId } : m)),
+      });
     } else {
       update({ magias: [...magias, { id: crypto.randomUUID(), ...novaMagia }] });
     }
@@ -288,6 +296,22 @@ export default function CharacterSheet() {
             ))}
           </div>
 
+          {/* ✅ BÔNUS DE PROFICIÊNCIA (aba abaixo dos atributos) */}
+          <div className="profBlock">
+            <div className="profTitle">BÔNUS DE PROFICIÊNCIA</div>
+
+            <div className="profHex">
+              <input
+                name="prof"
+                type="number"
+                value={Number.isFinite(prof) ? prof : PROF}
+                onChange={(e) => update({ prof: Number(e.target.value || 0) })}
+                inputMode="numeric"
+                autoComplete="off"
+              />
+            </div>
+          </div>
+
           {/* VIDA (✅ AGORA BATE COM TEU CSS) */}
           <div className="barBlock">
             <h4 className="barTitle">VIDA</h4>
@@ -295,8 +319,12 @@ export default function CharacterSheet() {
             <div className="barOrdem vida" style={{ "--pct": `${vidaPct}%` }}>
               <div className="barCenter">
                 <div className="barPad">
-                  <button className="barBtn" type="button" onClick={() => stepBar("vida", -1, true)}>«</button>
-                  <button className="barBtn" type="button" onClick={() => stepBar("vida", -1, false)}>‹</button>
+                  <button className="barBtn" type="button" onClick={() => stepBar("vida", -1, true)}>
+                    «
+                  </button>
+                  <button className="barBtn" type="button" onClick={() => stepBar("vida", -1, false)}>
+                    ‹
+                  </button>
                 </div>
 
                 <div className="barValue">
@@ -318,8 +346,12 @@ export default function CharacterSheet() {
                 </div>
 
                 <div className="barPad">
-                  <button className="barBtn" type="button" onClick={() => stepBar("vida", +1, false)}>›</button>
-                  <button className="barBtn" type="button" onClick={() => stepBar("vida", +1, true)}>»</button>
+                  <button className="barBtn" type="button" onClick={() => stepBar("vida", +1, false)}>
+                    ›
+                  </button>
+                  <button className="barBtn" type="button" onClick={() => stepBar("vida", +1, true)}>
+                    »
+                  </button>
                 </div>
               </div>
             </div>
@@ -332,8 +364,12 @@ export default function CharacterSheet() {
             <div className="barOrdem mana" style={{ "--pct": `${manaPct}%` }}>
               <div className="barCenter">
                 <div className="barPad">
-                  <button className="barBtn" type="button" onClick={() => stepBar("mana", -1, true)}>«</button>
-                  <button className="barBtn" type="button" onClick={() => stepBar("mana", -1, false)}>‹</button>
+                  <button className="barBtn" type="button" onClick={() => stepBar("mana", -1, true)}>
+                    «
+                  </button>
+                  <button className="barBtn" type="button" onClick={() => stepBar("mana", -1, false)}>
+                    ‹
+                  </button>
                 </div>
 
                 <div className="barValue">
@@ -355,8 +391,12 @@ export default function CharacterSheet() {
                 </div>
 
                 <div className="barPad">
-                  <button className="barBtn" type="button" onClick={() => stepBar("mana", +1, false)}>›</button>
-                  <button className="barBtn" type="button" onClick={() => stepBar("mana", +1, true)}>»</button>
+                  <button className="barBtn" type="button" onClick={() => stepBar("mana", +1, false)}>
+                    ›
+                  </button>
+                  <button className="barBtn" type="button" onClick={() => stepBar("mana", +1, true)}>
+                    »
+                  </button>
                 </div>
               </div>
             </div>
@@ -375,7 +415,9 @@ export default function CharacterSheet() {
 
           <div className="skillsList">
             {skills.map((s, i) => {
-              const bonus = mod(attrs[s.attr]) + (s.trained ? PROF : 0);
+              // ✅ agora usa prof do state (editável), e só soma se treinado
+              const bonus = mod(attrs[s.attr]) + (s.trained ? Number(prof || 0) : 0);
+
               return (
                 <div key={s.name} className="skill">
                   <input
