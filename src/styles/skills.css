@@ -1,0 +1,74 @@
+/* ==========================================
+   SKILLS.CSS - Perícias
+   ========================================== */
+
+.skillsTitle{
+  text-align:center;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:1px;
+  color:var(--gold);
+  margin:4px 0 10px;
+}
+
+.skillsHeader{
+  display:grid;
+  grid-template-columns:22px 1fr 96px 52px;
+  gap:12px;
+  padding:0 10px;
+  margin-bottom:6px;
+  font-size:10px;
+  letter-spacing:1px;
+  opacity:.72;
+  white-space:nowrap;
+}
+
+.skillsList{
+  display:grid;
+  gap:6px;
+}
+
+.skill{
+  display:grid;
+  grid-template-columns:22px 1fr 96px 52px;
+  gap:12px;
+  align-items:center;
+  padding:7px 10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
+
+.skill:hover{
+  border-color: rgba(214,179,90,0.22);
+  background: rgba(214,179,90,0.06);
+}
+
+.skill input[type="checkbox"]{
+  width:15px;
+  height:15px;
+  accent-color: var(--gold);
+}
+
+.skill span{
+  font-size:12px;
+  font-weight:650;
+}
+
+.skill select{
+  height:26px;
+  border-radius:9px;
+  background: rgba(0,0,0,0.35);
+  border:1px solid rgba(214,179,90,0.18);
+  color:var(--fg);
+  outline:none;
+  font-size:12px;
+  width:100%;
+}
+
+.skill b{
+  text-align:right;
+  color:var(--gold);
+  font-weight:900;
+  font-size:12px;
+}

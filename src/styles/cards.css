@@ -1,0 +1,503 @@
+/* ==========================================
+   CARDS.CSS - Ataques, Poderes, Magias, Mistérios
+   ========================================== */
+
+/* ===== BOTÃO "ADD" ===== */
+.ataqueAdd{
+  width:100%;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(214,179,90,0.30);
+  background: rgba(214,179,90,0.08);
+  color: var(--gold);
+  font-weight: 800;
+  cursor:pointer;
+  margin-bottom: 10px;
+}
+
+.ataqueAdd:hover{
+  border-color: rgba(214,179,90,0.50);
+  background: rgba(214,179,90,0.12);
+}
+
+/* ===== LISTAS ===== */
+.ataquesList{
+  display:grid;
+  gap:10px;
+}
+
+/* ===== CARD PADRÃO (ATAQUES/PODERES) ===== */
+.ataqueCard{
+  border-radius:14px;
+  padding:10px;
+  overflow:hidden;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+
+.ataqueCard:hover{
+  border-color: rgba(214,179,90,0.22);
+  background: rgba(214,179,90,0.04);
+  transform: translateY(-1px);
+}
+
+.ataqueHeader{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  cursor:pointer;
+  user-select:none;
+}
+
+.ataqueSeta{
+  display:inline-flex;
+  width:20px;
+  height:20px;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color: rgba(214,179,90,0.95);
+  transition: transform .16s ease;
+  transform-origin: 50% 50%;
+}
+
+.ataqueSeta.aberta{
+  transform: rotate(180deg);
+}
+
+.ataqueResumo{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0;
+}
+
+.ataqueResumo b{
+  font-size:13px;
+  font-weight:900;
+  color: #fff;
+}
+
+.ataqueResumo span{
+  font-size:11px;
+  opacity:.75;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.ataqueBody{
+  margin-top:10px;
+  padding-top:10px;
+  border-top: 1px solid rgba(214,179,90,0.18);
+  display:grid;
+  gap:8px;
+  font-size:12px;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.ataqueActions{
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ghostBtn{
+  border:1px solid rgba(214,179,90,0.22);
+  background: rgba(214,179,90,0.06);
+  color: var(--gold);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: 700;
+  opacity: .9;
+}
+
+.ghostBtn:hover{
+  opacity: 1;
+  border-color: rgba(214,179,90,0.38);
+  background: rgba(214,179,90,0.10);
+}
+
+.danger{
+  border:none;
+  background: rgba(178,33,33,0.95);
+  color:#fff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.danger:hover{
+  filter: brightness(1.08);
+}
+
+/* ===== PODERES ===== */
+.poderLinha{
+  margin-bottom:10px;
+  opacity:.95;
+}
+
+.poderDesc{
+  white-space: pre-wrap;
+  line-height: 1.35;
+  opacity: .95;
+  margin-bottom: 12px;
+  max-height: 180px;
+  overflow: auto;
+  padding-right: 6px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.poderDesc::-webkit-scrollbar{
+  width: 8px;
+}
+
+.poderDesc::-webkit-scrollbar-thumb{
+  background: rgba(214,179,90,0.18);
+  border-radius: 10px;
+}
+
+.poderDesc::-webkit-scrollbar-thumb:hover{
+  background: rgba(214,179,90,0.28);
+}
+
+.poderDesc{
+  scrollbar-width: thin;
+  scrollbar-color: rgba(214,179,90,0.22) transparent;
+}
+
+/* ===== MAGIAS ===== */
+.magiaTop{
+  display:grid;
+  gap:10px;
+}
+
+.magiaStat{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+
+.magiaStat span{
+  font-size:11px;
+  letter-spacing:1px;
+  opacity:.85;
+  font-weight:900;
+}
+
+.magiaStat input{
+  width:92px;
+  height:30px;
+  border-radius:10px;
+  border:1px solid rgba(214,179,90,0.20);
+  background: rgba(0,0,0,0.35);
+  color:var(--fg);
+  text-align:center;
+  outline:none;
+  font-weight:900;
+}
+
+.magiaStat input:focus{
+  border-color: rgba(214,179,90,0.55);
+}
+
+/* ===== SPELL CARD (COM DEGRADÊ) ===== */
+.spellCard{
+  --elem: #8d49ff;
+  --elem2: #8d49ff;
+
+  border-radius:14px;
+  padding:10px;
+  overflow:hidden;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  
+  background:
+    radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--elem) 28%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 75% 0%, color-mix(in srgb, var(--elem2) 18%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, rgba(255,255,255,0.018), rgba(0,0,0,0.22));
+  border-color: color-mix(in srgb, var(--elem) 22%, rgba(255,255,255,0.06));
+}
+
+.spellInferno{
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.spellHeader{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.spellSeta{
+  display:inline-flex;
+  width:18px;
+  height:18px;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color: var(--elem);
+  transition: transform .16s ease;
+}
+
+.spellSeta.aberta{ 
+  transform: rotate(180deg); 
+}
+
+.spellEquip{
+  width:14px;
+  height:14px;
+  border-radius:4px;
+  border:2px solid var(--elem);
+  background: transparent;
+  display:inline-block;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  outline:none;
+}
+
+.spellEquip:checked{
+  background: var(--elem);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset, 0 0 10px rgba(0,0,0,0.25);
+}
+
+.spellDot{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  border: 2px solid var(--elem);
+  box-shadow: 0 0 10px rgba(0,0,0,0.35);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0.00) 55%),
+    linear-gradient(180deg, var(--elem), var(--elem2));
+}
+
+.spellHeader:hover .spellDot{
+  box-shadow: 0 0 14px color-mix(in srgb, var(--elem) 55%, transparent);
+}
+
+.spellNameBox{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.spellName{
+  font-size:12px;
+  line-height:1.1;
+  font-weight:900;
+  color:#fff;
+}
+
+.spellMini{
+  font-size:10px;
+  opacity:.65;
+  color: var(--elem);
+  margin-top:-2px;
+}
+
+.spellBody{
+  margin-top:8px;
+  padding-top:10px;
+  border-top: 2px solid var(--elem);
+  display:grid;
+  gap:8px;
+}
+
+.spellRow{
+  display:flex;
+  gap:8px;
+  align-items:baseline;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.spellLbl{
+  min-width:86px;
+  font-size:11px;
+  font-weight:900;
+  color: var(--elem);
+  opacity:.95;
+}
+
+.spellVal{
+  font-size:11px;
+  opacity:.95;
+  line-height:1.35;
+}
+
+.spellGrid2{
+  display:grid;
+  grid-template-columns: 1fr !important;
+  gap:8px;
+}
+
+.spellDesc{
+  white-space: pre-wrap;
+  line-height:1.35;
+  opacity:.95;
+  font-size:11px;
+  max-height: 140px;
+  overflow:auto;
+  padding-right:6px;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.spellDesc::-webkit-scrollbar{
+  width: 8px;
+}
+
+.spellDesc::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.16);
+  border-radius: 10px;
+}
+
+.spellDesc::-webkit-scrollbar-thumb:hover{
+  background: rgba(255,255,255,0.22);
+}
+
+.spellInfoGrid{
+  display:grid;
+  gap:8px;
+}
+
+.spellLine{
+  display:grid;
+  grid-template-columns: 92px 1fr;
+  gap:10px;
+  align-items:baseline;
+}
+
+.spellDescBlock{
+  display:grid;
+  gap:6px;
+  margin-top: 4px;
+}
+
+/* ===== MISTÉRIOS (MESMA ESTÉTICA DE MAGIA) ===== */
+.mysteryCard{
+  border-radius:14px;
+  padding:10px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+
+  background:
+    radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--elem) 28%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 75% 0%, color-mix(in srgb, var(--elem2) 18%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, rgba(255,255,255,0.018), rgba(0,0,0,0.22));
+
+  border-color: color-mix(in srgb, var(--elem) 22%, rgba(255,255,255,0.06));
+}
+
+.mysteryHeader{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.mysterySeta{
+  display:inline-flex;
+  width:18px;
+  height:18px;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color: var(--elem);
+  transition: transform .16s ease;
+}
+
+.mysterySeta.aberta{ 
+  transform: rotate(180deg); 
+}
+
+.mysteryDot{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  border: 2px solid var(--elem);
+  box-shadow: 0 0 10px rgba(0,0,0,0.35);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0.00) 55%),
+    linear-gradient(180deg, var(--elem), var(--elem2));
+}
+
+.mysteryNameBox{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.mysteryName{
+  font-size:12px;
+  line-height:1.1;
+  font-weight:900;
+  color:#fff;
+}
+
+.mysteryMini{
+  font-size:10px;
+  opacity:.65;
+  color: var(--elem);
+  margin-top:-2px;
+}
+
+.mysteryBody{
+  margin-top:8px;
+  padding-top:10px;
+  border-top: 2px solid var(--elem);
+  display:grid;
+  gap:8px;
+}
+
+.mysteryDesc{
+  white-space: pre-wrap;
+  line-height:1.35;
+  opacity:.95;
+  font-size:11px;
+  max-height: 180px;
+  overflow:auto;
+  padding-right:6px;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.mysteryDesc::-webkit-scrollbar{ 
+  width: 8px; 
+}
+
+.mysteryDesc::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.16);
+  border-radius: 10px;
+}
+
+.mysteryDesc::-webkit-scrollbar-thumb:hover{
+  background: rgba(255,255,255,0.22);
+}
+
+/* RESPONSIVO */
+@media (max-width:520px){
+  .spellLbl{ 
+    min-width:80px; 
+  }
+}

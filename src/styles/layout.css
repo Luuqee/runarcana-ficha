@@ -1,0 +1,42 @@
+/* ==========================================
+   LAYOUT.CSS - Grid Principal e Responsivo
+   ========================================== */
+
+.sheet{
+  width:100%;
+  max-width:1200px;
+  margin:18px auto 70px;
+  padding:0 16px;
+}
+
+/* GRID PRINCIPAL (3 COLUNAS) */
+.layout3{
+  display:grid;
+  grid-template-columns:300px minmax(0, 1fr) 360px;
+  gap:18px;
+  align-items:start;
+}
+
+.left,.center,.right{ 
+  min-width:0; 
+}
+
+.right.rightWide{
+  justify-self: end;
+}
+
+/* RESPONSIVO */
+@media (max-width:980px){
+  .layout3{ 
+    grid-template-columns:1fr; 
+  }
+  .right.rightWide{ 
+    justify-self: stretch; 
+  }
+}
+
+@media (max-width:520px){
+  .grid2{ 
+    grid-template-columns: 1fr; 
+  }
+}

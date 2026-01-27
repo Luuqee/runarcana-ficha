@@ -1,0 +1,45 @@
+/* ==========================================
+   BASE.CSS - Variáveis, Reset, Globais
+   ========================================== */
+
+:root{
+  --bg:#0b0b0b;
+  --fg:#eaeaea;
+  --gold:#d6b35a;
+
+  --vida:#b22121;
+  --mana:#2a63c9;
+}
+
+/* fundo fixo */
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  min-height:100%;
+  background-color:#000;
+  background-image: radial-gradient(ellipse at center, #161616 0%, #0b0b0b 55%, #000 100%);
+  background-attachment: fixed;
+  color:var(--fg);
+}
+
+#root{ 
+  min-height:100vh; 
+  background:transparent; 
+}
+
+*{ 
+  box-sizing:border-box; 
+}
+
+/* ========= REMOVE SETINHAS DO INPUT NUMBER ========= */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"]{
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

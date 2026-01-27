@@ -49,7 +49,7 @@ export const PULSOS = [
   {
     key: "esmeralda",
     label: "Pulso Esmeralda",
-    c1: "#2bd66a", // verde esmeralda
+    c1: "#2bd66a",
     c2: "#0b5a2a",
     desc:
       "Ao escolher o Pulso Esmeralda, você deve escolher um dano físico e um dano elemental entre os tipos de dano. Após um descanso longo, você pode jogar seus dados de Pulso. Até o próximo descanso longo, o resultado será sua Redução de Dano (RD) dos tipos escolhidos. No 9º nível você escolhe um novo dano elemental e no 17º nível escolhe um terceiro. A partir do nível 11, essa redução também se aplica a dano mágico dos tipos escolhidos.",
@@ -58,7 +58,7 @@ export const PULSOS = [
   {
     key: "rubi",
     label: "Pulso Rubi",
-    c1: "#ff2a2a", // vermelho rubi
+    c1: "#ff2a2a",
     c2: "#5a0b0b",
     desc:
       "Ao escolher o Pulso Rubi, você escolhe 1 tipo de dano. Após um descanso longo, você rola seus dados de Pulso. Até o próximo descanso longo, uma vez por turno ao causar esse tipo de dano, você adiciona o resultado ao dano causado. Crítico multiplica esse adicional. No nível 11, também se aplica a dano mágico do mesmo tipo.",
@@ -67,7 +67,7 @@ export const PULSOS = [
   {
     key: "diamante",
     label: "Pulso Diamante",
-    c1: "#d9fbff", // branco/azulado claro
+    c1: "#d9fbff",
     c2: "#7fd3ff",
     desc:
       "Após um descanso longo, você rola seu dado de Pulso. Até o próximo descanso longo, o valor obtido é adicionado às curas que você realizar em terceiros ou, uma vez por turno, a uma cura que você receba. Não ativa com pontos de vida temporários.",
@@ -76,7 +76,7 @@ export const PULSOS = [
   {
     key: "ametista",
     label: "Pulso Ametista",
-    c1: "#a855ff", // roxo ametista
+    c1: "#a855ff",
     c2: "#2d0d66",
     desc:
       "Ao escolher esse pulso, você escolhe entre Vida, Mana ou Ki. Ao abater um alvo com ND adequado, você recupera pontos do recurso escolhido conforme a regra do pulso.",
@@ -85,7 +85,7 @@ export const PULSOS = [
   {
     key: "safira",
     label: "Pulso Safira",
-    c1: "#1e6bff", // azul safira forte
+    c1: "#1e6bff",
     c2: "#0b2a66",
     desc:
       "Após um descanso longo, você rola seu dado de Pulso. O valor vira seus pontos de Pulso. Você gasta pontos para somar/subtrair rolagens e também para amplificar/reduzir dano (cada ponto gasto vale seu bônus de proficiência).",
@@ -179,27 +179,27 @@ export const defaultNovaRuna = {
 
 export const defaultState = {
   tab: "magias",
-  // ✅ adicionei NIVEL aqui (pra ficar na idLine sem refatorar tudo)
+
+  // ✅ idLine
   info: { jogador: "", nivel: 1, personagem: "", classe: "", origem: "", regiao: "" },
 
+  // ✅ PROF (auto/manual) — novo
+  profMode: "auto", // "auto" | "manual"
   prof: PROF,
 
-  // ✅ Runas (pulso + lista)
+  // ✅ Runas
   runas: {
-    pulso: null, // { key, ... }
-    pulsoRoll: "", // resultado rolado no descanso
+    pulso: null,
+    pulsoRoll: "",
     escolhas: {
-      // esmeralda
       fisico: "",
       elemental1: "",
       elemental2: "",
       elemental3: "",
-      // rubi
       danoRubi: "",
-      // ametista
       recurso: "",
     },
-    lista: [], // runas/runessências adicionadas
+    lista: [],
   },
 
   attrs: { FOR: 10, DES: 10, CON: 10, INT: 10, SAB: 10, CAR: 10 },
@@ -223,12 +223,36 @@ export const defaultState = {
     { name: "Sobrevivência", attr: "SAB", trained: false },
     { name: "Tecnologia", attr: "INT", trained: false },
   ],
+
   vida: { atual: 35, max: 131 },
   mana: { atual: 40, max: 50 },
+
+  // ✅ defesa (mantém seu uso atual)
+  ca: 0,
+  escudo: 0,
+
   ataques: [],
   poderes: [],
   magias: [],
   magiaStats: { cd: 0, acerto: 0 },
   misterios: [],
-  
+
+  // ✅ NOVO: salvaguardas
+  saves: {
+    FOR: { proficient: false },
+    DES: { proficient: false },
+    CON: { proficient: false },
+    INT: { proficient: false },
+    SAB: { proficient: false },
+    CAR: { proficient: false },
+  },
+
+  // ✅ NOVO: salvaguarda contra morte
+  deathSaves: {
+    success: [false, false, false],
+    fail: [false, false, false],
+  },
+
+  // ✅ NOVO: exaustão (6 níveis)
+  exhaustion: [false, false, false, false, false, false],
 };

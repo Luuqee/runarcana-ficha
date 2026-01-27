@@ -41,10 +41,123 @@ import MysteryModal from "../components/modals/MysteryModal.jsx";
 import PulseModal from "../components/modals/PulseModal.jsx";
 import RuneModal from "../components/modals/RuneModal.jsx";
 
+// ✅ NOVO: extras do lado esquerdo (saves / morte / exaustão)
+import LeftCombatExtras from "../components/sheets/LeftCombatExtras.jsx";
+
+/** Progressão padrão (D&D 5e) */
+function profByLevel(nivel) {
+  const lv = Math.max(1, Number(nivel || 1));
+  if (lv >= 17) return 6;
+  if (lv >= 13) return 5;
+  if (lv >= 9) return 4;
+  if (lv >= 5) return 3;
+  return 2;
+}
+
 export default function CharacterSheet() {
   const [state, setState] = useState(() => loadSheet(STORAGE_KEY, defaultState));
   const [loaded, setLoaded] = useState(false);
 
+  // =========================
+  // Persistência
+  // =========================
+  useEffect(() => setLoaded(true), []);
+  useEffect(() => {
+    if (!loaded) return;
+    saveSheet(STORAGE_KEY, state);
+  }, [state, loaded]);
+
+  // =========================
+  // Helpers
+  // =========================
+  const update = (patch) => setState((s) => ({ ...s, ...patch }));
+
+  // =========================
+  // De-structure com defaults seguros
+  // =========================
+  const info = state.info || defaultState.info;
+  const attrs = state.attrs || defaultState.attrs;
+  const skills = state.skills || defaultState.skills;
+
+  const vida = state.vida || defaultState.vida;
+  const mana = state.mana || defaultState.mana;
+
+  const ataques = state.ataques || [];
+  const poderes = state.poderes || [];
+  const magias = state.magias || [];
+  const magiaStats = state.magiaStats || defaultState.magiaStats;
+  const misterios = state.misterios || [];
+
+  const tab = state.tab || "magias";
+
+  const runas = state.runas || defaultState.runas;
+  const ca = state.ca ?? "";
+  const escudo = state.escudo ?? "";
+
+  // ✅ NOVO: salvaguardas / morte / exaustão (com fallback)
+  const saves = state.saves || defaultState.saves;
+  const deathSaves = state.deathSaves || defaultState.deathSaves;
+  const exhaustion = state.exhaustion || defaultState.exhaustion;
+
+  // ✅ nível vem do info.nivel
+  const nivel = Number(info?.nivel || 1);
+
+  // =========================
+  // Proficiência correta (Auto/Manual)
+  // =========================
+  const profMode = state.profMode || "auto"; // "auto" | "manual"
+  const profManual = Number.isFinite(Number(state.prof)) ? Number(state.prof) : PROF;
+  const profAuto = profByLevel(nivel);
+  const prof = profMode === "manual" ? profManual : profAuto;
+
+  // Se estiver em AUTO, sincroniza state.prof pra UI ficar sempre consistente (sem quebrar o input)
+  useEffect(() => {
+    if (!loaded) return;
+    if (profMode !== "auto") return;
+    setState((s) => ({ ...s, prof: profAuto }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nivel, profMode, loaded]);
+
+  // =========================
+  // Vida / Mana (clamp + %)
+  // =========================
+  const vidaC = clampBar(vida);
+  const manaC = clampBar(mana);
+
+  const vidaPct = vidaC.max ? (Number(vidaC.atual) / Number(vidaC.max)) * 100 : 0;
+  const manaPct = manaC.max ? (Number(manaC.atual) / Number(manaC.max)) * 100 : 0;
+
+  const stepBar = (which, dir, big = false) => {
+    const step = big ? 5 : 1;
+    const k = which === "vida" ? vidaC : manaC;
+
+    const atual = Number(k.atual || 0);
+    const max = Number(k.max || 0);
+    const next = Math.max(0, Math.min(max, atual + dir * step));
+
+    const payload =
+      which === "vida"
+        ? { vida: clampBar({ ...k, atual: next }) }
+        : { mana: clampBar({ ...k, atual: next }) };
+
+    update(payload);
+  };
+
+  // =========================
+  // Maps (performance + edição)
+  // =========================
+  const ataquesById = useMemo(() => new Map((ataques || []).map((a) => [a.id, a])), [ataques]);
+  const poderesById = useMemo(() => new Map((poderes || []).map((p) => [p.id, p])), [poderes]);
+  const magiasById = useMemo(() => new Map((magias || []).map((m) => [m.id, m])), [magias]);
+
+  const elementByKey = useMemo(() => buildElementMap(ELEMENTOS), []);
+  const getVars = (key) => getElemVars(elementByKey, key);
+
+  const mysteryByKey = useMemo(() => new Map((MISTERIOS || []).map((m) => [m.key, m])), []);
+
+  // =========================
+  // Modais + estado local (ataques/poderes/magias/mistérios/runas)
+  // =========================
   const [openAtaque, setOpenAtaque] = useState(null);
   const [showAtaqueModal, setShowAtaqueModal] = useState(false);
   const [editAtaqueId, setEditAtaqueId] = useState(null);
@@ -72,73 +185,15 @@ export default function CharacterSheet() {
   const [showRuneModal, setShowRuneModal] = useState(false);
   const [editRuneId, setEditRuneId] = useState(null);
 
-  useEffect(() => setLoaded(true), []);
-  useEffect(() => {
-    if (!loaded) return;
-    saveSheet(STORAGE_KEY, state);
-  }, [state, loaded]);
-
-  const {
-    info,
-    attrs,
-    skills,
-    vida,
-    mana,
-    ataques,
-    poderes,
-    magias,
-    magiaStats,
-    misterios,
-    tab,
-    prof,
-    runas,
-    ca,
-    escudo,
-  } = state;
-
-  const update = (p) => setState((s) => ({ ...s, ...p }));
-
-  // ✅ nível vem do info.nivel
-  const nivel = Number(info?.nivel || 1);
-
-  // --------- VIDA / MANA (clamp + %)
-  const vidaC = clampBar(vida);
-  const manaC = clampBar(mana);
-
-  const vidaPct = vidaC.max ? (Number(vidaC.atual) / Number(vidaC.max)) * 100 : 0;
-  const manaPct = manaC.max ? (Number(manaC.atual) / Number(manaC.max)) * 100 : 0;
-
-  const stepBar = (which, dir, big = false) => {
-    const step = big ? 5 : 1;
-    const k = which === "vida" ? vidaC : manaC;
-    const atual = Number(k.atual || 0);
-    const max = Number(k.max || 0);
-
-    const next = Math.max(0, Math.min(max, atual + dir * step));
-    const payload =
-      which === "vida"
-        ? { vida: clampBar({ ...k, atual: next }) }
-        : { mana: clampBar({ ...k, atual: next }) };
-
-    update(payload);
-  };
-
-  // --------- MAPS
-  const ataquesById = useMemo(() => new Map((ataques || []).map((a) => [a.id, a])), [ataques]);
-  const poderesById = useMemo(() => new Map((poderes || []).map((p) => [p.id, p])), [poderes]);
-  const magiasById = useMemo(() => new Map((magias || []).map((m) => [m.id, m])), [magias]);
-
-  const elementByKey = useMemo(() => buildElementMap(ELEMENTOS), []);
-  const getVars = (key) => getElemVars(elementByKey, key);
-
-  const mysteryByKey = useMemo(() => new Map((MISTERIOS || []).map((m) => [m.key, m])), []);
-
-  // --------- ATAQUES
+  // =========================
+  // ATAQUES
+  // =========================
   const abrirModalCriarAtaque = () => {
     setEditAtaqueId(null);
     setNovoAtaque(defaultNovoAtaque);
     setShowAtaqueModal(true);
   };
+
   const abrirModalEditarAtaque = (id) => {
     const a = ataquesById.get(id);
     if (!a) return;
@@ -146,13 +201,16 @@ export default function CharacterSheet() {
     setNovoAtaque({ ...defaultNovoAtaque, ...a });
     setShowAtaqueModal(true);
   };
+
   const fecharModalAtaque = () => {
     setShowAtaqueModal(false);
     setEditAtaqueId(null);
     setNovoAtaque(defaultNovoAtaque);
   };
+
   const salvarAtaque = () => {
     if (!novoAtaque.nome?.trim() || !novoAtaque.dano?.trim()) return;
+
     if (editAtaqueId) {
       update({
         ataques: ataques.map((a) => (a.id === editAtaqueId ? { ...a, ...novoAtaque, id: editAtaqueId } : a)),
@@ -162,14 +220,18 @@ export default function CharacterSheet() {
     }
     fecharModalAtaque();
   };
+
   const removeAtaque = (id) => update({ ataques: ataques.filter((a) => a.id !== id) });
 
-  // --------- PODERES
+  // =========================
+  // PODERES
+  // =========================
   const abrirModalCriarPoder = () => {
     setEditPoderId(null);
     setNovoPoder(defaultNovoPoder);
     setShowPoderModal(true);
   };
+
   const abrirModalEditarPoder = (id) => {
     const p = poderesById.get(id);
     if (!p) return;
@@ -177,13 +239,16 @@ export default function CharacterSheet() {
     setNovoPoder({ ...defaultNovoPoder, ...p });
     setShowPoderModal(true);
   };
+
   const fecharModalPoder = () => {
     setShowPoderModal(false);
     setEditPoderId(null);
     setNovoPoder(defaultNovoPoder);
   };
+
   const salvarPoder = () => {
     if (!novoPoder.nome?.trim()) return;
+
     if (editPoderId) {
       update({
         poderes: poderes.map((p) => (p.id === editPoderId ? { ...p, ...novoPoder, id: editPoderId } : p)),
@@ -193,14 +258,18 @@ export default function CharacterSheet() {
     }
     fecharModalPoder();
   };
+
   const removePoder = (id) => update({ poderes: poderes.filter((p) => p.id !== id) });
 
-  // --------- MAGIAS
+  // =========================
+  // MAGIAS
+  // =========================
   const abrirModalCriarMagia = () => {
     setEditMagiaId(null);
     setNovaMagia(defaultNovaMagia);
     setShowMagiaModal(true);
   };
+
   const abrirModalEditarMagia = (id) => {
     const m = magiasById.get(id);
     if (!m) return;
@@ -208,13 +277,16 @@ export default function CharacterSheet() {
     setNovaMagia({ ...defaultNovaMagia, ...m });
     setShowMagiaModal(true);
   };
+
   const fecharModalMagia = () => {
     setShowMagiaModal(false);
     setEditMagiaId(null);
     setNovaMagia(defaultNovaMagia);
   };
+
   const salvarMagia = () => {
     if (!novaMagia.nome?.trim()) return;
+
     if (editMagiaId) {
       update({
         magias: magias.map((m) => (m.id === editMagiaId ? { ...m, ...novaMagia, id: editMagiaId } : m)),
@@ -224,17 +296,22 @@ export default function CharacterSheet() {
     }
     fecharModalMagia();
   };
+
   const removeMagia = (id) => update({ magias: magias.filter((m) => m.id !== id) });
 
-  // --------- MISTÉRIOS
+  // =========================
+  // MISTÉRIOS
+  // =========================
   const abrirModalCriarMisterio = () => {
     setNovoMisterio(defaultNovoMisterio);
     setShowMisterioModal(true);
   };
+
   const fecharModalMisterio = () => {
     setShowMisterioModal(false);
     setNovoMisterio(defaultNovoMisterio);
   };
+
   const salvarMisterio = () => {
     const escolhido = MISTERIOS.find((m) => m.key === novoMisterio.misterioKey);
     if (!escolhido) return;
@@ -259,9 +336,12 @@ export default function CharacterSheet() {
 
     fecharModalMisterio();
   };
+
   const removeMisterio = (id) => update({ misterios: (misterios || []).filter((m) => m.id !== id) });
 
-  // --------- RUNAS (funções)
+  // =========================
+  // RUNAS
+  // =========================
   const abrirModalPulso = () => setShowPulseModal(true);
   const fecharModalPulso = () => setShowPulseModal(false);
 
@@ -305,47 +385,46 @@ export default function CharacterSheet() {
     setEditRuneId(null);
   };
 
-const salvarRuna = (form) => {
-  if (!form?.nome?.trim()) return;
+  const salvarRuna = (form) => {
+    if (!form?.nome?.trim()) return;
 
-  const runasSafe = runas || {
-    pulso: null,
-    pulsoRoll: "",
-    escolhas: {
-      fisico: "",
-      elemental1: "",
-      elemental2: "",
-      elemental3: "",
-      danoRubi: "",
-      recurso: "",
-    },
-    lista: [],
+    const runasSafe = runas || {
+      pulso: null,
+      pulsoRoll: "",
+      escolhas: {
+        fisico: "",
+        elemental1: "",
+        elemental2: "",
+        elemental3: "",
+        danoRubi: "",
+        recurso: "",
+      },
+      lista: [],
+    };
+
+    const list = runasSafe.lista || [];
+
+    if (editRuneId) {
+      update({
+        runas: {
+          ...runasSafe,
+          lista: list.map((r) => (r.id === editRuneId ? { ...r, ...form, id: editRuneId } : r)),
+        },
+      });
+      setOpenRuna(editRuneId);
+    } else {
+      const id = crypto.randomUUID();
+      update({
+        runas: {
+          ...runasSafe,
+          lista: [...list, { id, ...form }],
+        },
+      });
+      setOpenRuna(id);
+    }
+
+    fecharModalRuna();
   };
-
-  const list = runasSafe.lista || [];
-
-  if (editRuneId) {
-    update({
-      runas: {
-        ...runasSafe,
-        lista: list.map((r) => (r.id === editRuneId ? { ...r, ...form, id: editRuneId } : r)),
-      },
-    });
-    setOpenRuna(editRuneId); // ✅ abre depois de editar
-  } else {
-    const id = crypto.randomUUID();
-    update({
-      runas: {
-        ...runasSafe,
-        lista: [...list, { id, ...form }],
-      },
-    });
-    setOpenRuna(id); // ✅ abre depois de criar
-  }
-
-  fecharModalRuna();
-};
-
 
   const removerRuna = (id) => {
     const list = runas?.lista || [];
@@ -373,7 +452,9 @@ const salvarRuna = (form) => {
     return (runas?.lista || []).find((r) => r.id === editRuneId) || null;
   }, [editRuneId, runas]);
 
-  // ESC fecha (inclui runas)
+  // =========================
+  // ESC fecha tudo
+  // =========================
   useEffect(() => {
     const onKey = (e) => {
       if (e.key !== "Escape") return;
@@ -389,6 +470,9 @@ const salvarRuna = (form) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showAtaqueModal, showPoderModal, showMagiaModal, showMisterioModal, showPulseModal, showRuneModal]);
 
+  // =========================
+  // Render
+  // =========================
   return (
     <div className="sheet">
       {/* IDENTIFICAÇÃO */}
@@ -417,6 +501,7 @@ const salvarRuna = (form) => {
       <div className="layout3">
         {/* ESQUERDA */}
         <div className="left">
+          {/* ATRIBUTOS */}
           <div className="attrs">
             {ATTRS.map((a) => (
               <div key={a} className="attr">
@@ -435,52 +520,72 @@ const salvarRuna = (form) => {
             ))}
           </div>
 
-          {/* BÔNUS DE PROFICIÊNCIA */}
+          {/* PROFICIÊNCIA (Auto/Manual) */}
           <div className="profBlock">
-            <div className="profTitle">BÔNUS DE PROFICIÊNCIA</div>
+            <div className="profTitle" style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
+              <span>BÔNUS DE PROFICIÊNCIA</span>
+
+              <button
+                type="button"
+                className="ghostBtn"
+                style={{ padding: "6px 10px", fontSize: 11 }}
+                onClick={() => update({ profMode: profMode === "auto" ? "manual" : "auto" })}
+                title="Alternar Auto/Manual"
+              >
+                {profMode === "auto" ? "AUTO" : "MANUAL"}
+              </button>
+            </div>
+
             <div className="profHex">
               <input
                 name="prof"
                 type="number"
-                value={Number.isFinite(prof) ? prof : PROF}
-                onChange={(e) => update({ prof: Number(e.target.value || 0) })}
+                value={prof}
+                onChange={(e) => update({ prof: Number(e.target.value || 0), profMode: "manual" })}
                 inputMode="numeric"
                 autoComplete="off"
+                disabled={profMode === "auto"}
+                style={{ opacity: profMode === "auto" ? 0.8 : 1 }}
               />
             </div>
+
+            {profMode === "auto" && (
+              <div className="hint" style={{ marginTop: 8 }}>
+                Calculado pelo nível ({nivel}): <b style={{ color: "var(--gold)" }}>+{profAuto}</b>
+              </div>
+            )}
           </div>
 
-{/* ✅ CA / ESCUDO (só dois campos) */}
-<div className="caBlock">
-  <div className="caTitle">CLASSE DE ARMADURA</div>
+          {/* CA / ESCUDO */}
+          <div className="caBlock">
+            <div className="caTitle">CLASSE DE ARMADURA</div>
 
-  <div className="caGrid2">
-    <div className="caField">
-      <span>CA</span>
-      <input
-        name="ca"
-        type="number"
-        value={ca}
-        onChange={(e) => update({ ca: e.target.value })}
-        inputMode="numeric"
-        autoComplete="off"
-      />
-    </div>
+            <div className="caGrid2">
+              <div className="caField">
+                <span>CA</span>
+                <input
+                  name="ca"
+                  type="number"
+                  value={ca}
+                  onChange={(e) => update({ ca: e.target.value })}
+                  inputMode="numeric"
+                  autoComplete="off"
+                />
+              </div>
 
-    <div className="caField">
-      <span>Escudo</span>
-      <input
-        name="escudo"
-        type="number"
-        value={escudo}
-        onChange={(e) => update({ escudo: e.target.value })}
-        inputMode="numeric"
-        autoComplete="off"
-      />
-    </div>
-  </div>
-</div>
-
+              <div className="caField">
+                <span>Escudo</span>
+                <input
+                  name="escudo"
+                  type="number"
+                  value={escudo}
+                  onChange={(e) => update({ escudo: e.target.value })}
+                  inputMode="numeric"
+                  autoComplete="off"
+                />
+              </div>
+            </div>
+          </div>
 
           {/* VIDA */}
           <div className="barBlock">
@@ -571,6 +676,16 @@ const salvarRuna = (form) => {
               </div>
             </div>
           </div>
+
+          {/* ✅ NOVO: Salvaguardas / Morte / Exaustão (compacto abaixo da mana) */}
+          <LeftCombatExtras
+            attrs={attrs}
+            profBonus={prof}
+            saves={saves}
+            deathSaves={deathSaves}
+            exhaustion={exhaustion}
+            update={update}
+          />
         </div>
 
         {/* CENTRO */}
@@ -751,14 +866,13 @@ const salvarRuna = (form) => {
       />
 
       <RuneModal
-  key={editRuneId || "nova-runa"}  // ✅ força remontar quando trocar de runa / criar
-  open={showRuneModal}
-  title={editRuneId ? "Editar Runa / Runessência" : "Adicionar Runa / Runessência"}
-  onClose={fecharModalRuna}
-  onSave={salvarRuna}
-  initial={initialRune}
-/>
-
+        key={editRuneId || "nova-runa"} // ✅ força remontar quando trocar de runa / criar
+        open={showRuneModal}
+        title={editRuneId ? "Editar Runa / Runessência" : "Adicionar Runa / Runessência"}
+        onClose={fecharModalRuna}
+        onSave={salvarRuna}
+        initial={initialRune}
+      />
     </div>
   );
 }

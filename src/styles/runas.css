@@ -1,0 +1,358 @@
+/* ==========================================
+   RUNAS.CSS - Runas e Pulso Rúnico
+   ========================================== */
+
+.runesWrap{
+  display:grid;
+  gap:10px;
+}
+
+/* ===== TABELA PULSO ===== */
+.pulseTable{
+  border-radius:14px;
+  padding:10px;
+  border:1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
+
+.pulseTableTitle{
+  font-size:10px;
+  letter-spacing:1px;
+  font-weight:900;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.pulseTableGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:6px;
+  align-items:center;
+  text-align:center;
+}
+
+.ptHead{
+  font-size:10px;
+  opacity:.7;
+  letter-spacing:1px;
+}
+
+.ptVal{
+  font-size:12px;
+  font-weight:900;
+  color:#fff;
+  padding:6px 0;
+  border-radius:10px;
+  background: rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* ===== CARD DO PULSO ===== */
+.pulseCard{
+  --elem: #d6b35a;
+  --elem2: #fff2a8;
+
+  border-radius:14px;
+  padding:10px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  background:
+    radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--elem) 28%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 75% 0%, color-mix(in srgb, var(--elem2) 18%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, rgba(255,255,255,0.018), rgba(0,0,0,0.22));
+  border-color: color-mix(in srgb, var(--elem) 22%, rgba(255,255,255,0.06));
+}
+
+.pulseHeader{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.pulseSeta{
+  display:inline-flex;
+  width:18px;
+  height:18px;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color: var(--elem);
+  transition: transform .16s ease;
+}
+
+.pulseSeta.aberta{ 
+  transform: rotate(180deg); 
+}
+
+.pulseDot{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  border: 2px solid var(--elem);
+  box-shadow: 0 0 10px rgba(0,0,0,0.35);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0.00) 55%),
+    linear-gradient(180deg, var(--elem), var(--elem2));
+}
+
+.pulseNameBox{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.pulseName{
+  font-size:12px;
+  line-height:1.1;
+  font-weight:900;
+  color:#fff;
+}
+
+.pulseMini{
+  font-size:10px;
+  opacity:.75;
+  color: var(--elem);
+}
+
+.pulseBody{
+  margin-top:8px;
+  padding-top:10px;
+  border-top: 2px solid var(--elem);
+  display:grid;
+  gap:10px;
+  overflow: visible !important;
+}
+
+.pulseDesc{
+  white-space: pre-wrap;
+  line-height:1.35;
+  opacity:.95;
+  font-size:11px;
+  max-height: 160px;
+  overflow:auto;
+  padding-right:6px;
+}
+
+.pulseRow{
+  display:grid;
+  grid-template-columns: 140px minmax(0, 1fr) !important;
+  gap:10px;
+  align-items:center;
+}
+
+.pulseLbl{
+  font-size:11px;
+  font-weight:900;
+  color: var(--elem);
+}
+
+.pulseInput{
+  height:30px;
+  border-radius:10px;
+  background: rgba(0,0,0,0.35);
+  border:1px solid rgba(214,179,90,0.18);
+  color:var(--fg);
+  text-align:center;
+  outline:none;
+  font-weight:900;
+}
+
+.pulseGrid{
+  display:grid;
+  gap:10px;
+}
+
+.pulseField span{
+  display:block;
+  font-size:10px;
+  letter-spacing:.6px;
+  opacity:.78;
+  margin-bottom: 6px;
+  font-weight:900;
+}
+
+.pulseField select{
+  width:100%;
+  height:30px;
+  border-radius:10px;
+  background: rgba(0,0,0,0.35);
+  border:1px solid rgba(214,179,90,0.18);
+  color:var(--fg);
+  outline:none;
+  font-size:12px;
+}
+
+.pulseActions{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top: 4px;
+}
+
+/* ===== CARD DE RUNA ===== */
+.runaCard{
+  --elem: #8d49ff;
+  --elem2: #8d49ff;
+
+  border-radius:14px;
+  padding:10px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  background:
+    radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--elem) 28%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 75% 0%, color-mix(in srgb, var(--elem2) 18%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, rgba(255,255,255,0.018), rgba(0,0,0,0.22));
+  border-color: color-mix(in srgb, var(--elem) 22%, rgba(255,255,255,0.06));
+}
+
+.runaHeader{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.runaSeta{
+  display:inline-flex;
+  width:18px;
+  height:18px;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color: var(--elem);
+  transition: transform .16s ease;
+}
+
+.runaSeta.aberta{ 
+  transform: rotate(180deg); 
+}
+
+.runaDot{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  border: 2px solid var(--elem);
+  box-shadow: 0 0 10px rgba(0,0,0,0.35);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0.00) 55%),
+    linear-gradient(180deg, var(--elem), var(--elem2));
+}
+
+.runaNameBox{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.runaName{
+  font-size:12px;
+  font-weight:900;
+  color:#fff;
+}
+
+.runaMini{
+  font-size:10px;
+  opacity:.7;
+  color: var(--elem);
+}
+
+.runaBody{
+  margin-top:8px;
+  padding-top:10px;
+  border-top: 2px solid var(--elem);
+  display:grid;
+  gap:10px;
+  overflow: visible !important;
+}
+
+/* ===== MAESTRIAS ===== */
+.maestriaBox{
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.22);
+  border-radius:14px;
+  padding:10px;
+}
+
+.maeTitle{
+  font-size:11px;
+  font-weight:900;
+  color: var(--elem);
+  margin-bottom: 8px;
+}
+
+.maeChoices{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom: 10px;
+}
+
+.maeChoice{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  font-size:11px;
+  font-weight:900;
+  color:#fff;
+}
+
+.maeChoice input{
+  accent-color: var(--gold);
+}
+
+.maeClear{
+  margin-left:auto;
+  border:1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: var(--fg);
+  border-radius: 10px;
+  padding: 6px 10px;
+  cursor:pointer;
+  font-weight:800;
+  font-size:11px;
+}
+
+.maeText{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+
+.maeCol{
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;
+  padding:8px;
+  background: rgba(255,255,255,0.02);
+}
+
+.maeLbl{
+  font-size:10px;
+  opacity:.7;
+  font-weight:900;
+  margin-bottom: 6px;
+  color: var(--gold);
+}
+
+.maeDesc{
+  font-size:11px;
+  white-space: pre-wrap;
+  line-height:1.35;
+  opacity:.95;
+}
+
+/* RESPONSIVO */
+@media (max-width:520px){
+  .pulseRow{ 
+    grid-template-columns: 1fr !important; 
+  }
+  .maeText{ 
+    grid-template-columns: 1fr; 
+  }
+}

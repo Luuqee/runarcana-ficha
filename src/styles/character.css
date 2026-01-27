@@ -1,0 +1,157 @@
+/* ==========================================
+   CHARACTER.CSS - Header, Atributos, Proficiência
+   ========================================== */
+
+/* ===== IDENTIFICAÇÃO (HEADER) ===== */
+.idLine{
+  display:grid;
+  grid-template-columns:repeat(6, minmax(0, 1fr)); /* ✅ 6 colunas para 6 campos */
+  gap:14px;
+  margin-bottom:14px;
+  padding-bottom:10px;
+  border-bottom:1px solid rgba(214,179,90,0.18);
+}
+
+.idField span{
+  font-size:10px;
+  letter-spacing:1px;
+  opacity:.75;
+}
+
+.idField input{
+  width:100%;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid rgba(214,179,90,0.22);
+  color:var(--fg);
+  padding:6px 0;
+  outline:none;
+}
+
+.idField input:focus{
+  border-bottom-color: rgba(214,179,90,0.65);
+}
+
+/* ===== ATRIBUTOS ===== */
+.attrs{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:10px;
+}
+
+.attr{
+  background: rgba(255,255,255,0.03);
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(214,179,90,0.10);
+}
+
+.attr span{
+  display:block;
+  font-size:11px;
+  font-weight:750;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+
+.attr div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.attr b{ 
+  font-size:13px; 
+  font-weight:900; 
+}
+
+.attr input{
+  width:54px;
+  height:30px;
+  border-radius:9px;
+  background: rgba(0,0,0,0.35);
+  border:1px solid rgba(214,179,90,0.18);
+  color:var(--fg);
+  text-align:center;
+  outline:none;
+}
+
+.attr input:focus{ 
+  border-color: rgba(214,179,90,0.55); 
+}
+
+/* ===== BÔNUS DE PROFICIÊNCIA ===== */
+.profBlock{
+  margin-top: 12px;
+  margin-bottom: 6px;
+  border-radius:14px;
+  padding:10px;
+  border:1px solid rgba(214,179,90,0.14);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(214,179,90,0.18) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.20));
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.profTitle{
+  font-size:10px;
+  letter-spacing:1px;
+  font-weight:900;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.profHex{
+  width: 86px;
+  height: 62px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  border:1px solid rgba(214,179,90,0.35);
+  background: rgba(0,0,0,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.profHex input{
+  width:70%;
+  border:none;
+  outline:none;
+  background: transparent;
+  color: var(--fg);
+  text-align:center;
+  font-weight:900;
+  font-size:18px;
+}
+
+.miniRow{
+  display:flex;
+  gap:12px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.miniCol{
+  flex:1;
+}
+
+.miniRow .profBlock{
+  margin-top:0;
+  margin-bottom:0;
+}
+
+/* RESPONSIVO */
+@media (max-width:980px){
+  .idLine{ 
+    grid-template-columns:repeat(3, minmax(0, 1fr)); /* 3 colunas em telas médias (2 linhas) */
+  }
+}
+
+@media (max-width:520px){
+  .idLine{ 
+    grid-template-columns:repeat(2, minmax(0, 1fr)); /* 2 colunas em mobile (3 linhas) */
+  }
+  .miniRow{ 
+    flex-direction:column; 
+  }
+}

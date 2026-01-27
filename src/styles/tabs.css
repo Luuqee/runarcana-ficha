@@ -1,0 +1,50 @@
+/* ==========================================
+   TABS.CSS - Abas e Conteúdo
+   ========================================== */
+
+.rightTabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.rightTabs button{
+  flex:1 1 calc(50% - 10px);
+  text-align:center;
+  padding:10px 10px;
+  border-radius:12px;
+  background: rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.10);
+  color:var(--fg);
+  cursor:pointer;
+  opacity:.75;
+  font-weight:650;
+}
+
+.rightTabs button:hover{
+  border-color: rgba(214,179,90,0.25);
+  opacity:.95;
+}
+
+.rightTabs .active{
+  border-color: rgba(214,179,90,0.55);
+  color:var(--gold);
+  opacity:1;
+}
+
+.tabContent{
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  overflow: visible !important;
+  max-height: none !important;
+}
+
+/* RESPONSIVO */
+@media (max-width:520px){
+  .rightTabs button{ 
+    flex:1 1 100%; 
+  }
+}

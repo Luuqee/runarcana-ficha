@@ -1,0 +1,281 @@
+/* ==========================================
+   COMBAT.CSS - Vida, Mana, CA, Salvaguardas
+   ========================================== */
+
+/* ===== VIDA/MANA estilo Ordem ===== */
+.barBlock{
+  margin-top:14px;
+}
+
+.barTitle{
+  margin:0 0 8px;
+  font-size:11px;
+  letter-spacing:1px;
+  opacity:.95;
+  text-align:left;
+}
+
+.barOrdem{
+  position:relative;
+  height:46px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+}
+
+.barOrdem.vida{ 
+  background: rgba(178,33,33,0.95); 
+}
+
+.barOrdem.mana{ 
+  background: rgba(42,99,201,0.95); 
+}
+
+.barOrdem::after{
+  content:"";
+  position:absolute;
+  right:0; top:0; bottom:0;
+  width: calc(100% - var(--pct, 100%));
+  background: rgba(0,0,0,0.45);
+  pointer-events:none;
+}
+
+.barCenter{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 0 10px;
+  color:#fff;
+  font-weight:900;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.55);
+}
+
+.barPad{
+  display:flex;
+  align-items:center;
+  gap:0;
+  height:30px;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.30);
+  background: rgba(0,0,0,0.18);
+}
+
+.barBtn{
+  width:30px;
+  height:30px;
+  border:none;
+  background: transparent;
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+  font-size:16px;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+}
+
+.barBtn:hover{
+  background: rgba(0,0,0,0.18);
+}
+
+.barBtn:active{
+  transform: translateY(1px);
+}
+
+.barBtn + .barBtn{
+  border-left:1px solid rgba(255,255,255,0.22);
+}
+
+.barValue{
+  min-width: 130px;
+  height:30px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.30);
+  background: rgba(0,0,0,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 12px;
+}
+
+.barValueText{
+  font-weight: 900;
+  font-size:14px;
+  letter-spacing: .3px;
+}
+
+.barValue input{
+  width:62px;
+  height:22px;
+  border:none;
+  outline:none;
+  background: transparent;
+  color:#fff;
+  font-weight:900;
+  font-size:14px;
+  text-align:center;
+}
+
+.barSlash{
+  opacity:.95;
+  font-weight:900;
+}
+
+/* ===== CLASSE DE ARMADURA ===== */
+.caBlock{
+  border-radius:14px;
+  padding:10px;
+  border:1px solid rgba(214,179,90,0.14);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(214,179,90,0.12) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.20));
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.caTitle{
+  font-size:10px;
+  letter-spacing:1px;
+  font-weight:900;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.caGrid2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:8px;
+}
+
+.caField span{
+  display:block;
+  font-size:10px;
+  letter-spacing:.6px;
+  opacity:.78;
+  margin-bottom: 6px;
+  font-weight:900;
+}
+
+.caField input{
+  width:100%;
+  height:30px;
+  border-radius:10px;
+  background: rgba(0,0,0,0.35);
+  border:1px solid rgba(214,179,90,0.18);
+  color:var(--fg);
+  text-align:center;
+  outline:none;
+  font-weight:900;
+}
+
+.caField input:focus{
+  border-color: rgba(214,179,90,0.55);
+}
+
+/* ===== SALVAGUARDAS / MORTE / EXAUSTÃO ===== */
+.rkLeftExtras{
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.rkMiniCard{
+  border-radius: 14px;
+  padding: 10px;
+  border: 1px solid rgba(214,179,90,0.12);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(214,179,90,0.10) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.20));
+  box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+}
+
+.rkMiniTitle{
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 900;
+  color: rgba(214,179,90,0.95);
+  margin-bottom: 8px;
+  opacity: .95;
+}
+
+.rkSavesGrid{
+  display: grid;
+  gap: 6px;
+}
+
+.rkSaveRow{
+  display: grid;
+  grid-template-columns: 34px 1fr 44px;
+  gap: 8px;
+  align-items: center;
+}
+
+.rkSaveDots{
+  display: flex;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.rkSaveLabel{
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.9);
+}
+
+.rkSaveValue{
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--gold);
+  text-align: right;
+}
+
+.rkDeathRow{
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.rkDeathLbl{
+  font-size: 11px;
+  font-weight: 800;
+  opacity: .85;
+}
+
+.rkDotsLine{
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.rkDot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(214,179,90,0.55);
+  background: rgba(0,0,0,0.25);
+  cursor: pointer;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.25);
+}
+
+.rkDot.on{
+  background: rgba(214,179,90,0.95);
+  box-shadow: 0 0 12px rgba(214,179,90,0.20);
+}
+
+/* RESPONSIVO */
+@media (max-width:520px){
+  .caGrid2{ 
+    grid-template-columns: 1fr; 
+  }
+}
