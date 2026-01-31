@@ -1,0 +1,127 @@
+/* src/styles/navbar.css */
+.navbar {
+  background: rgba(10, 10, 10, 0.95);
+  border-bottom: 1px solid rgba(214, 179, 90, 0.20);
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.navContent {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.navLogo {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--gold);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.navLogo:hover {
+  opacity: 0.8;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navLink {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: color 0.2s ease;
+  opacity: 0.9;
+}
+
+.navLink:hover {
+  color: var(--gold);
+  opacity: 1;
+}
+
+.navUser {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(214, 179, 90, 0.20);
+}
+
+.navAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+}
+
+.navUsername {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.navLogout {
+  background: rgba(214, 179, 90, 0.15);
+  border: 1px solid rgba(214, 179, 90, 0.30);
+  color: var(--gold);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navLogout:hover {
+  background: rgba(214, 179, 90, 0.25);
+  border-color: rgba(214, 179, 90, 0.50);
+}
+
+.navLoginBtn {
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 900;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.navLoginBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(214, 179, 90, 0.30);
+}
+
+@media (max-width: 768px) {
+  .navContent {
+    height: 50px;
+  }
+  
+  .navLogo {
+    font-size: 16px;
+  }
+  
+  .navLinks {
+    gap: 15px;
+  }
+  
+  .navLink {
+    font-size: 13px;
+  }
+  
+  .navUsername {
+    display: none;
+  }
+}

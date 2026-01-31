@@ -1,0 +1,106 @@
+/* src/styles/home.css */
+.homePage {
+  min-height: calc(100vh - 60px);
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.homeHero {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.homeTitle {
+  font-size: 56px;
+  font-weight: 900;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--fg);
+}
+
+.homeGold {
+  color: var(--gold);
+  display: block;
+}
+
+.homeSubtitle {
+  font-size: 20px;
+  margin: 30px 0 40px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+.homeCta {
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  padding: 18px 48px;
+  font-size: 20px;
+  font-weight: 900;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(214, 179, 90, 0.3);
+}
+
+.homeCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(214, 179, 90, 0.5);
+}
+
+.homeFeatures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 80px;
+}
+
+.featureCard {
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.08), rgba(214, 179, 90, 0.03));
+  border: 1px solid rgba(214, 179, 90, 0.20);
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(214, 179, 90, 0.40);
+  box-shadow: 0 8px 30px rgba(214, 179, 90, 0.15);
+}
+
+.featureIcon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.featureCard h3 {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--gold);
+  margin: 0 0 12px;
+}
+
+.featureCard p {
+  font-size: 14px;
+  opacity: 0.85;
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .homeTitle {
+    font-size: 40px;
+  }
+  
+  .homeSubtitle {
+    font-size: 16px;
+  }
+  
+  .homeCta {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+}
