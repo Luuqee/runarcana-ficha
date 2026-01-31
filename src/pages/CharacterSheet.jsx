@@ -33,6 +33,7 @@ import TabSpells from "../components/sheets/TabSpells.jsx";
 import TabMysteries from "../components/sheets/TabMysteries.jsx";
 import TabDescription from "../components/sheets/TabDescription.jsx";
 import TabRunes from "../components/sheets/TabRunes.jsx";
+import TabItens from "../components/sheets/TabItens.jsx";
 
 import AttackModal from "../components/modals/AttackModal.jsx";
 import PowerModal from "../components/modals/PowerModal.jsx";
@@ -40,8 +41,8 @@ import SpellModal from "../components/modals/SpellModal.jsx";
 import MysteryModal from "../components/modals/MysteryModal.jsx";
 import PulseModal from "../components/modals/PulseModal.jsx";
 import RuneModal from "../components/modals/RuneModal.jsx";
+import ItemModal from "../components/modals/ItemModal.jsx";
 
-// ✅ NOVO: extras do lado esquerdo (saves / morte / exaustão)
 import LeftCombatExtras from "../components/sheets/LeftCombatExtras.jsx";
 
 /** Progressão padrão (D&D 5e) */
@@ -58,23 +59,14 @@ export default function CharacterSheet() {
   const [state, setState] = useState(() => loadSheet(STORAGE_KEY, defaultState));
   const [loaded, setLoaded] = useState(false);
 
-  // =========================
-  // Persistência
-  // =========================
   useEffect(() => setLoaded(true), []);
   useEffect(() => {
     if (!loaded) return;
     saveSheet(STORAGE_KEY, state);
   }, [state, loaded]);
 
-  // =========================
-  // Helpers
-  // =========================
   const update = (patch) => setState((s) => ({ ...s, ...patch }));
 
-  // =========================
-  // De-structure com defaults seguros
-  // =========================
   const info = state.info || defaultState.info;
   const attrs = state.attrs || defaultState.attrs;
   const skills = state.skills || defaultState.skills;
@@ -94,23 +86,21 @@ export default function CharacterSheet() {
   const ca = state.ca ?? "";
   const escudo = state.escudo ?? "";
 
-  // ✅ NOVO: salvaguardas / morte / exaustão (com fallback)
   const saves = state.saves || defaultState.saves;
   const deathSaves = state.deathSaves || defaultState.deathSaves;
   const exhaustion = state.exhaustion || defaultState.exhaustion;
 
-  // ✅ nível vem do info.nivel
+  // ✅ NOVO: moedas e inventário
+  const moedas = state.moedas || defaultState.moedas;
+  const inventario = state.inventario || defaultState.inventario;
+
   const nivel = Number(info?.nivel || 1);
 
-  // =========================
-  // Proficiência correta (Auto/Manual)
-  // =========================
-  const profMode = state.profMode || "auto"; // "auto" | "manual"
+  const profMode = state.profMode || "auto";
   const profManual = Number.isFinite(Number(state.prof)) ? Number(state.prof) : PROF;
   const profAuto = profByLevel(nivel);
   const prof = profMode === "manual" ? profManual : profAuto;
 
-  // Se estiver em AUTO, sincroniza state.prof pra UI ficar sempre consistente (sem quebrar o input)
   useEffect(() => {
     if (!loaded) return;
     if (profMode !== "auto") return;
@@ -118,9 +108,6 @@ export default function CharacterSheet() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nivel, profMode, loaded]);
 
-  // =========================
-  // Vida / Mana (clamp + %)
-  // =========================
   const vidaC = clampBar(vida);
   const manaC = clampBar(mana);
 
@@ -143,9 +130,6 @@ export default function CharacterSheet() {
     update(payload);
   };
 
-  // =========================
-  // Maps (performance + edição)
-  // =========================
   const ataquesById = useMemo(() => new Map((ataques || []).map((a) => [a.id, a])), [ataques]);
   const poderesById = useMemo(() => new Map((poderes || []).map((p) => [p.id, p])), [poderes]);
   const magiasById = useMemo(() => new Map((magias || []).map((m) => [m.id, m])), [magias]);
@@ -155,9 +139,6 @@ export default function CharacterSheet() {
 
   const mysteryByKey = useMemo(() => new Map((MISTERIOS || []).map((m) => [m.key, m])), []);
 
-  // =========================
-  // Modais + estado local (ataques/poderes/magias/mistérios/runas)
-  // =========================
   const [openAtaque, setOpenAtaque] = useState(null);
   const [showAtaqueModal, setShowAtaqueModal] = useState(false);
   const [editAtaqueId, setEditAtaqueId] = useState(null);
@@ -177,7 +158,6 @@ export default function CharacterSheet() {
   const [showMisterioModal, setShowMisterioModal] = useState(false);
   const [novoMisterio, setNovoMisterio] = useState(defaultNovoMisterio);
 
-  // ✅ RUNAS (UI)
   const [openPulse, setOpenPulse] = useState(null);
   const [openRuna, setOpenRuna] = useState(null);
 
@@ -185,9 +165,11 @@ export default function CharacterSheet() {
   const [showRuneModal, setShowRuneModal] = useState(false);
   const [editRuneId, setEditRuneId] = useState(null);
 
-  // =========================
-  // ATAQUES
-  // =========================
+  // ✅ NOVO: modal de itens
+  const [showItemModal, setShowItemModal] = useState(false);
+  const [editItemId, setEditItemId] = useState(null);
+  const [openItem, setOpenItem] = useState(null);
+
   const abrirModalCriarAtaque = () => {
     setEditAtaqueId(null);
     setNovoAtaque(defaultNovoAtaque);
@@ -223,9 +205,6 @@ export default function CharacterSheet() {
 
   const removeAtaque = (id) => update({ ataques: ataques.filter((a) => a.id !== id) });
 
-  // =========================
-  // PODERES
-  // =========================
   const abrirModalCriarPoder = () => {
     setEditPoderId(null);
     setNovoPoder(defaultNovoPoder);
@@ -261,9 +240,6 @@ export default function CharacterSheet() {
 
   const removePoder = (id) => update({ poderes: poderes.filter((p) => p.id !== id) });
 
-  // =========================
-  // MAGIAS
-  // =========================
   const abrirModalCriarMagia = () => {
     setEditMagiaId(null);
     setNovaMagia(defaultNovaMagia);
@@ -299,9 +275,6 @@ export default function CharacterSheet() {
 
   const removeMagia = (id) => update({ magias: magias.filter((m) => m.id !== id) });
 
-  // =========================
-  // MISTÉRIOS
-  // =========================
   const abrirModalCriarMisterio = () => {
     setNovoMisterio(defaultNovoMisterio);
     setShowMisterioModal(true);
@@ -339,9 +312,6 @@ export default function CharacterSheet() {
 
   const removeMisterio = (id) => update({ misterios: (misterios || []).filter((m) => m.id !== id) });
 
-  // =========================
-  // RUNAS
-  // =========================
   const abrirModalPulso = () => setShowPulseModal(true);
   const fecharModalPulso = () => setShowPulseModal(false);
 
@@ -452,9 +422,39 @@ export default function CharacterSheet() {
     return (runas?.lista || []).find((r) => r.id === editRuneId) || null;
   }, [editRuneId, runas]);
 
-  // =========================
-  // ESC fecha tudo
-  // =========================
+  // ✅ NOVO: funções do modal de itens
+  const abrirModalAdicionarItem = () => {
+    setEditItemId(null);
+    setShowItemModal(true);
+  };
+
+  const abrirModalEditarItem = (id) => {
+    setEditItemId(id);
+    setShowItemModal(true);
+  };
+
+  const fecharModalItem = () => {
+    setShowItemModal(false);
+    setEditItemId(null);
+  };
+
+  const salvarItem = (item) => {
+    if (editItemId) {
+      // Editando item existente
+      update({
+        inventario: inventario.map((i) => (i.id === editItemId ? { ...item, id: editItemId } : i)),
+      });
+    } else {
+      // Adicionando novo item
+      update({
+        inventario: [...inventario, { id: crypto.randomUUID(), ...item }],
+      });
+    }
+    fecharModalItem();
+  };
+
+  const itemToEdit = editItemId ? inventario.find((i) => i.id === editItemId) : null;
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key !== "Escape") return;
@@ -464,15 +464,13 @@ export default function CharacterSheet() {
       if (showMisterioModal) fecharModalMisterio();
       if (showPulseModal) fecharModalPulso();
       if (showRuneModal) fecharModalRuna();
+      if (showItemModal) fecharModalItem();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAtaqueModal, showPoderModal, showMagiaModal, showMisterioModal, showPulseModal, showRuneModal]);
+  }, [showAtaqueModal, showPoderModal, showMagiaModal, showMisterioModal, showPulseModal, showRuneModal, showItemModal]);
 
-  // =========================
-  // Render
-  // =========================
   return (
     <div className="sheet">
       {/* IDENTIFICAÇÃO */}
@@ -520,69 +518,108 @@ export default function CharacterSheet() {
             ))}
           </div>
 
-          {/* PROFICIÊNCIA (Auto/Manual) */}
-          <div className="profBlock">
-            <div className="profTitle" style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
-              <span>BÔNUS DE PROFICIÊNCIA</span>
-
-              <button
-                type="button"
-                className="ghostBtn"
-                style={{ padding: "6px 10px", fontSize: 11 }}
-                onClick={() => update({ profMode: profMode === "auto" ? "manual" : "auto" })}
-                title="Alternar Auto/Manual"
-              >
-                {profMode === "auto" ? "AUTO" : "MANUAL"}
-              </button>
-            </div>
-
-            <div className="profHex">
-              <input
-                name="prof"
-                type="number"
-                value={prof}
-                onChange={(e) => update({ prof: Number(e.target.value || 0), profMode: "manual" })}
-                inputMode="numeric"
-                autoComplete="off"
-                disabled={profMode === "auto"}
-                style={{ opacity: profMode === "auto" ? 0.8 : 1 }}
-              />
-            </div>
-
-            {profMode === "auto" && (
-              <div className="hint" style={{ marginTop: 8 }}>
-                Calculado pelo nível ({nivel}): <b style={{ color: "var(--gold)" }}>+{profAuto}</b>
+          {/* PROFICIÊNCIA + CA (JUNTOS) */}
+          <div className="profCaBlock">
+            {/* Proficiência à esquerda */}
+            <div className="profSide">
+              <div className="profBlock">
+                <div className="profTitle">BÔNUS DE<br/>PROFICIÊNCIA</div>
+                <div className="profHex">
+                  <input
+                    name="prof"
+                    type="number"
+                    value={prof}
+                    onChange={(e) => update({ prof: Number(e.target.value || 0), profMode: "manual" })}
+                    inputMode="numeric"
+                    autoComplete="off"
+                    disabled={profMode === "auto"}
+                  />
+                </div>
               </div>
-            )}
+            </div>
+
+            {/* CA à direita */}
+            <div className="caSide">
+              <div className="caTitle">CLASSE DE ARMADURA</div>
+              <div className="caGrid2">
+                <div className="caField">
+                  <span>CA</span>
+                  <input
+                    name="ca"
+                    type="number"
+                    value={ca}
+                    onChange={(e) => update({ ca: e.target.value })}
+                    inputMode="numeric"
+                    autoComplete="off"
+                  />
+                </div>
+
+                <div className="caField">
+                  <span>Escudo</span>
+                  <input
+                    name="escudo"
+                    type="number"
+                    value={escudo}
+                    onChange={(e) => update({ escudo: e.target.value })}
+                    inputMode="numeric"
+                    autoComplete="off"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* CA / ESCUDO */}
-          <div className="caBlock">
-            <div className="caTitle">CLASSE DE ARMADURA</div>
-
-            <div className="caGrid2">
-              <div className="caField">
-                <span>CA</span>
+          {/* HEXÁGONOS: Deslocamento, Iniciativa, Percepção Passiva, Intuição Passiva */}
+          <div className="hexBlock">
+            <div className="hexItem">
+              <div className="hexLabel">DESLOCAMENTO</div>
+              <div className="hexagon">
                 <input
-                  name="ca"
-                  type="number"
-                  value={ca}
-                  onChange={(e) => update({ ca: e.target.value })}
-                  inputMode="numeric"
+                  name="deslocamento"
+                  type="text"
+                  value={state.deslocamento || "9m"}
+                  onChange={(e) => update({ deslocamento: e.target.value })}
                   autoComplete="off"
                 />
               </div>
+            </div>
 
-              <div className="caField">
-                <span>Escudo</span>
+            <div className="hexItem">
+              <div className="hexLabel">INICIATIVA</div>
+              <div className="hexagon">
                 <input
-                  name="escudo"
-                  type="number"
-                  value={escudo}
-                  onChange={(e) => update({ escudo: e.target.value })}
-                  inputMode="numeric"
+                  name="iniciativa"
+                  type="text"
+                  value={state.iniciativa || "+0"}
+                  onChange={(e) => update({ iniciativa: e.target.value })}
                   autoComplete="off"
                 />
+              </div>
+            </div>
+
+            <div className="hexItem">
+              <div className="hexLabel">PERCEPÇÃO<br/>PASSIVA</div>
+              <div className="hexagon hexCalculado">
+                <span>
+                  {(() => {
+                    const percepcao = skills.find(s => s.name === "Percepção");
+                    const bonus = percepcao?.trained ? prof : 0;
+                    return 10 + mod(attrs.SAB) + bonus;
+                  })()}
+                </span>
+              </div>
+            </div>
+
+            <div className="hexItem">
+              <div className="hexLabel">INTUIÇÃO<br/>PASSIVA</div>
+              <div className="hexagon hexCalculado">
+                <span>
+                  {(() => {
+                    const intuicao = skills.find(s => s.name === "Intuição");
+                    const bonus = intuicao?.trained ? prof : 0;
+                    return 10 + mod(attrs.SAB) + bonus;
+                  })()}
+                </span>
               </div>
             </div>
           </div>
@@ -595,10 +632,10 @@ export default function CharacterSheet() {
               <div className="barCenter">
                 <div className="barPad">
                   <button className="barBtn" type="button" onClick={() => stepBar("vida", -1, true)}>
-                    «
+                    &lt;&lt;
                   </button>
                   <button className="barBtn" type="button" onClick={() => stepBar("vida", -1, false)}>
-                    ‹
+                    &lt;
                   </button>
                 </div>
 
@@ -622,10 +659,10 @@ export default function CharacterSheet() {
 
                 <div className="barPad">
                   <button className="barBtn" type="button" onClick={() => stepBar("vida", +1, false)}>
-                    ›
+                    &gt;
                   </button>
                   <button className="barBtn" type="button" onClick={() => stepBar("vida", +1, true)}>
-                    »
+                    &gt;&gt;
                   </button>
                 </div>
               </div>
@@ -640,10 +677,10 @@ export default function CharacterSheet() {
               <div className="barCenter">
                 <div className="barPad">
                   <button className="barBtn" type="button" onClick={() => stepBar("mana", -1, true)}>
-                    «
+                    &lt;&lt;
                   </button>
                   <button className="barBtn" type="button" onClick={() => stepBar("mana", -1, false)}>
-                    ‹
+                    &lt;
                   </button>
                 </div>
 
@@ -667,17 +704,17 @@ export default function CharacterSheet() {
 
                 <div className="barPad">
                   <button className="barBtn" type="button" onClick={() => stepBar("mana", +1, false)}>
-                    ›
+                    &gt;
                   </button>
                   <button className="barBtn" type="button" onClick={() => stepBar("mana", +1, true)}>
-                    »
+                    &gt;&gt;
                   </button>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ✅ NOVO: Salvaguardas / Morte / Exaustão (compacto abaixo da mana) */}
+          {/* SALVAGUARDAS / MORTE / EXAUSTÃO */}
           <LeftCombatExtras
             attrs={attrs}
             profBonus={prof}
@@ -805,7 +842,20 @@ export default function CharacterSheet() {
               />
             )}
 
-            {tab === "descrição" && <TabDescription />}
+            {tab === "itens" && (
+              <TabItens
+                moedas={moedas}
+                inventario={inventario}
+                attrs={attrs}
+                update={update}
+                abrirModalAdicionarItem={abrirModalAdicionarItem}
+                abrirModalEditarItem={abrirModalEditarItem}
+                openItem={openItem}
+                setOpenItem={setOpenItem}
+              />
+            )}
+
+            {tab === "descrição" && <TabDescription descricao={state.descricao} update={update} />}
           </div>
         </div>
       </div>
@@ -866,12 +916,20 @@ export default function CharacterSheet() {
       />
 
       <RuneModal
-        key={editRuneId || "nova-runa"} // ✅ força remontar quando trocar de runa / criar
+        key={editRuneId || "nova-runa"}
         open={showRuneModal}
         title={editRuneId ? "Editar Runa / Runessência" : "Adicionar Runa / Runessência"}
         onClose={fecharModalRuna}
         onSave={salvarRuna}
         initial={initialRune}
+      />
+
+      <ItemModal
+        open={showItemModal}
+        title={editItemId ? "Editar Item" : "Adicionar Item"}
+        item={itemToEdit}
+        onClose={fecharModalItem}
+        onSave={salvarItem}
       />
     </div>
   );

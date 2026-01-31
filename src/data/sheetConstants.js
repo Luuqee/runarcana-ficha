@@ -177,6 +177,17 @@ export const defaultNovaRuna = {
   m2Escolha: "", // "A" | "B" | ""
 };
 
+// ✅ NOVO: Moedas e Inventário
+export const defaultMoedas = {
+  platina: 0,
+  ouro: 0,
+  electro: 0,
+  prata: 0,
+  cobre: 0,
+};
+
+export const defaultInventario = [];
+
 export const defaultState = {
   tab: "magias",
 
@@ -231,6 +242,10 @@ export const defaultState = {
   ca: 0,
   escudo: 0,
 
+  // ✅ NOVO: deslocamento e iniciativa
+  deslocamento: "9m",
+  iniciativa: "+0",
+
   ataques: [],
   poderes: [],
   magias: [],
@@ -255,4 +270,17 @@ export const defaultState = {
 
   // ✅ NOVO: exaustão (6 níveis)
   exhaustion: [false, false, false, false, false, false],
+
+  // ✅ NOVO: moedas e inventário
+  moedas: defaultMoedas,
+  inventario: defaultInventario,
+
+  // ✅ NOVO: descrição do personagem
+  descricao: {
+    anotacoes: "",
+    aparencia: "",
+    personalidade: "",
+    historico: "",
+    objetivo: "",
+  },
 };

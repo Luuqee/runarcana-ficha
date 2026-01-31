@@ -55,7 +55,7 @@ export default function LeftCombatExtras({
             const isProf = !!saves?.[a]?.proficient;
             return (
               <div key={a} className="rkSaveRow">
-                {/* ✅ CORRIGIDO: bolinhas só visuais, onClick só no pai */}
+                {/* ✅ CORRIGIDO: apenas 1 bolinha */}
                 <div 
                   className="rkSaveDots" 
                   onClick={(e) => {
@@ -64,7 +64,6 @@ export default function LeftCombatExtras({
                   }} 
                   title="Proficiente"
                 >
-                  <span className={`rkDot ${isProf ? "on" : ""}`} />
                   <span className={`rkDot ${isProf ? "on" : ""}`} />
                 </div>
 

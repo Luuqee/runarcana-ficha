@@ -29,3 +29,9 @@
 
 /* MODALS: Todos os modais */
 @import './modals.css';
+
+@import "./itens.css";
+
+@import "./itemModal.css";
+
+@import "./descricao.css";

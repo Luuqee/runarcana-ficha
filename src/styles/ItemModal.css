@@ -1,0 +1,398 @@
+/* ==========================================
+   ITEM MODAL CSS - COMPLETO E FUNCIONAL
+   ========================================== */
+
+/* ===== OVERLAY E MODAL BASE - ESPECÍFICO PARA ITENS ===== */
+.itemModalOverlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 10000 !important;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.itemModalBox {
+  background: linear-gradient(180deg, rgba(26, 26, 26, 0.98) 0%, rgba(18, 18, 18, 0.98) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(214, 179, 90, 0.20);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.60);
+  width: 100%;
+  max-width: 800px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: auto;
+}
+
+.itemModal {
+  max-width: 800px;
+  width: 100%;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(214, 179, 90, 0.15);
+  flex-shrink: 0;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modalClose {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  color: var(--fg);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modalClose:hover {
+  background: rgba(214, 179, 90, 0.20);
+  border-color: rgba(214, 179, 90, 0.50);
+}
+
+.modalBody {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px;
+  border-top: 1px solid rgba(214, 179, 90, 0.15);
+  flex-shrink: 0;
+}
+
+.btnCancel,
+.btnSave {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid;
+}
+
+.btnCancel {
+  background: rgba(0, 0, 0, 0.30);
+  border-color: rgba(214, 179, 90, 0.25);
+  color: var(--fg);
+}
+
+.btnCancel:hover {
+  background: rgba(214, 179, 90, 0.15);
+  border-color: rgba(214, 179, 90, 0.40);
+}
+
+.btnSave {
+  background: rgba(214, 179, 90, 0.25);
+  border-color: rgba(214, 179, 90, 0.50);
+  color: var(--gold);
+}
+
+.btnSave:hover {
+  background: rgba(214, 179, 90, 0.35);
+  border-color: rgba(214, 179, 90, 0.70);
+}
+
+.btnSave:disabled {
+  opacity: 0.40;
+  cursor: not-allowed;
+}
+
+/* ===== MODO SELECTOR ===== */
+.itemModoSelector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.btnModo {
+  flex: 1;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 8px;
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnModo:hover {
+  background: rgba(214, 179, 90, 0.15);
+  border-color: rgba(214, 179, 90, 0.40);
+}
+
+.btnModo.active {
+  background: rgba(214, 179, 90, 0.25);
+  border-color: rgba(214, 179, 90, 0.60);
+  color: var(--gold);
+}
+
+/* ===== CATEGORIAS ===== */
+.itemCategorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.itemCategorias button {
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(214, 179, 90, 0.20);
+  border-radius: 6px;
+  color: var(--fg);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.itemCategorias button:hover {
+  background: rgba(214, 179, 90, 0.15);
+  border-color: rgba(214, 179, 90, 0.35);
+}
+
+.itemCategorias button.active {
+  background: rgba(214, 179, 90, 0.20);
+  border-color: rgba(214, 179, 90, 0.50);
+  color: var(--gold);
+}
+
+/* ===== BUSCA ===== */
+.itemBusca {
+  margin-bottom: 16px;
+}
+
+.itemBusca input {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 8px;
+  color: var(--fg);
+  font-size: 13px;
+  outline: none;
+}
+
+.itemBusca input:focus {
+  border-color: rgba(214, 179, 90, 0.50);
+}
+
+.itemBusca input::placeholder {
+  color: rgba(255, 255, 255, 0.40);
+}
+
+/* ===== LISTA DE ITENS ===== */
+.itemLista {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid rgba(214, 179, 90, 0.20);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.20);
+}
+
+.itemListaVazia {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--fg);
+  opacity: 0.50;
+  font-size: 13px;
+}
+
+.itemListaItem {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(214, 179, 90, 0.10);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.itemListaItem:last-child {
+  border-bottom: none;
+}
+
+.itemListaItem:hover {
+  background: rgba(214, 179, 90, 0.12);
+}
+
+.itemListaNome {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+
+.itemListaInfo {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--fg);
+  opacity: 0.70;
+}
+
+.itemListaInfo span {
+  padding: 2px 8px;
+  background: rgba(214, 179, 90, 0.15);
+  border-radius: 4px;
+}
+
+/* ===== FORMULÁRIO ===== */
+.itemForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formRow label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.formRow input,
+.formRow textarea,
+.formRow select {
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 6px;
+  color: var(--fg);
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+}
+
+.formRow input:focus,
+.formRow textarea:focus,
+.formRow select:focus {
+  border-color: rgba(214, 179, 90, 0.50);
+}
+
+.formRow textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.formRow2 {
+  flex-direction: row;
+  gap: 12px;
+}
+
+.formRow2 label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btnVoltar {
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 6px;
+  color: var(--fg);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.btnVoltar:hover {
+  background: rgba(214, 179, 90, 0.15);
+  border-color: rgba(214, 179, 90, 0.40);
+}
+
+/* ===== SCROLLBAR CUSTOMIZADA ===== */
+.itemLista::-webkit-scrollbar {
+  width: 8px;
+}
+
+.itemLista::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.20);
+}
+
+.itemLista::-webkit-scrollbar-thumb {
+  background: rgba(214, 179, 90, 0.30);
+  border-radius: 4px;
+}
+
+.itemLista::-webkit-scrollbar-thumb:hover {
+  background: rgba(214, 179, 90, 0.50);
+}
+
+.modalBody::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modalBody::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.20);
+}
+
+.modalBody::-webkit-scrollbar-thumb {
+  background: rgba(214, 179, 90, 0.30);
+  border-radius: 4px;
+}
+
+.modalBody::-webkit-scrollbar-thumb:hover {
+  background: rgba(214, 179, 90, 0.50);
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 640px) {
+  .itemModalBox {
+    max-width: 95vw;
+  }
+
+  .itemCategorias {
+    gap: 6px;
+  }
+
+  .itemCategorias button {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+
+  .formRow2 {
+    flex-direction: column;
+  }
+}

@@ -1,6 +1,6 @@
 // src/components/sheets/TabsHeader.jsx
 export default function TabsHeader({ tab, setTab }) {
-  const tabs = ["ataques", "poderes", "magias", "misterios", "runas", "descrição"];
+  const tabs = ["ataques", "poderes", "magias", "misterios", "runas", "itens", "descrição"];
 
   return (
     <div className="rightTabs">

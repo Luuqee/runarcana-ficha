@@ -5,11 +5,10 @@
 /* ===== IDENTIFICAÇÃO (HEADER) ===== */
 .idLine{
   display:grid;
-  grid-template-columns:repeat(6, minmax(0, 1fr)); /* ✅ 6 colunas para 6 campos */
+  grid-template-columns:repeat(6, minmax(0, 1fr));
   gap:14px;
   margin-bottom:14px;
   padding-bottom:10px;
-  border-bottom:1px solid rgba(214,179,90,0.18);
 }
 
 .idField span{
@@ -36,122 +35,243 @@
 .attrs{
   display:grid;
   grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:10px;
+  gap:8px;
 }
 
 .attr{
   background: rgba(255,255,255,0.03);
-  padding:10px;
-  border-radius:12px;
+  padding:8px;
+  border-radius:10px;
   border:1px solid rgba(214,179,90,0.10);
 }
 
 .attr span{
   display:block;
-  font-size:11px;
+  font-size:9px;
   font-weight:750;
   color:var(--gold);
-  margin-bottom:6px;
+  margin-bottom:4px;
+  letter-spacing:0.5px;
 }
 
 .attr div{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
+  gap:8px;
 }
 
 .attr b{ 
-  font-size:13px; 
+  font-size:16px; 
   font-weight:900; 
 }
 
 .attr input{
-  width:54px;
-  height:30px;
-  border-radius:9px;
+  width:44px;
+  height:26px;
+  border-radius:8px;
   background: rgba(0,0,0,0.35);
   border:1px solid rgba(214,179,90,0.18);
   color:var(--fg);
   text-align:center;
   outline:none;
+  font-size:13px;
+  font-weight:700;
 }
 
 .attr input:focus{ 
   border-color: rgba(214,179,90,0.55); 
 }
 
-/* ===== BÔNUS DE PROFICIÊNCIA ===== */
-.profBlock{
-  margin-top: 12px;
-  margin-bottom: 6px;
-  border-radius:14px;
-  padding:10px;
-  border:1px solid rgba(214,179,90,0.14);
-  background:
-    radial-gradient(circle at 20% 15%, rgba(214,179,90,0.18) 0%, transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.20));
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+/* ===== PROFICIÊNCIA + CA ===== */
+.profCaBlock {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.08), rgba(214, 179, 90, 0.03));
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 10px;
+  padding: 12px 16px;
 }
 
-.profTitle{
-  font-size:10px;
-  letter-spacing:1px;
-  font-weight:900;
+.profSide {
+  flex: 0 0 auto;
+}
+
+.profBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.profTitle {
+  font-size: 7px;
+  letter-spacing: 1px;
+  font-weight: 900;
   color: var(--gold);
-  margin-bottom: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.2;
 }
 
-.profHex{
-  width: 86px;
-  height: 62px;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  border:1px solid rgba(214,179,90,0.35);
-  background: rgba(0,0,0,0.35);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.profHex {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid rgba(214, 179, 90, 0.50);
+  background: radial-gradient(circle at 30% 30%, rgba(214, 179, 90, 0.25), rgba(214, 179, 90, 0.10));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.30), inset 0 2px 4px rgba(214, 179, 90, 0.15);
 }
 
-.profHex input{
-  width:70%;
-  border:none;
-  outline:none;
+.profHex input {
+  width: 100%;
+  height: 100%;
   background: transparent;
+  border: none;
+  outline: none;
+  color: var(--gold);
+  text-align: center;
+  font-weight: 900;
+  font-size: 26px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.40);
+}
+
+.caSide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.caTitle {
+  font-size: 8px;
+  letter-spacing: 1px;
+  font-weight: 900;
+  color: var(--gold);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.caGrid2 {
+  display: flex;
+  gap: 10px;
+}
+
+.caField {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.caField span {
+  font-size: 8px;
+  font-weight: 900;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.caField input {
+  width: 100%;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(214, 179, 90, 0.35);
+  border-radius: 8px;
   color: var(--fg);
-  text-align:center;
-  font-weight:900;
-  font-size:18px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 900;
+  outline: none;
 }
 
-.miniRow{
-  display:flex;
-  gap:12px;
-  margin-top: 12px;
-  margin-bottom: 6px;
+.caField input:focus {
+  border-color: rgba(214, 179, 90, 0.65);
 }
 
-.miniCol{
-  flex:1;
+/* ===== CÍRCULOS (DESLOCAMENTO, INICIATIVA, PASSIVAS) ===== */
+.hexBlock {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.miniRow .profBlock{
-  margin-top:0;
-  margin-bottom:0;
+.hexItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.hexLabel {
+  font-size: 7px;
+  font-weight: 900;
+  color: var(--gold);
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  min-height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hexagon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 30%, rgba(214, 179, 90, 0.15), rgba(214, 179, 90, 0.05));
+  border: 2px solid rgba(214, 179, 90, 0.40);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.hexagon input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--fg);
+  text-align: center;
+  font-weight: 900;
+  font-size: 13px;
+  border-radius: 50%;
+}
+
+.hexagon.hexCalculado {
+  background: radial-gradient(circle at 30% 30%, rgba(214, 179, 90, 0.28), rgba(214, 179, 90, 0.12));
+  border-color: rgba(214, 179, 90, 0.55);
+  box-shadow: 0 2px 6px rgba(214, 179, 90, 0.20), inset 0 2px 4px rgba(214, 179, 90, 0.12);
+}
+
+.hexagon.hexCalculado span {
+  color: var(--gold);
+  font-weight: 900;
+  font-size: 15px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.30);
 }
 
 /* RESPONSIVO */
 @media (max-width:980px){
   .idLine{ 
-    grid-template-columns:repeat(3, minmax(0, 1fr)); /* 3 colunas em telas médias (2 linhas) */
+    grid-template-columns:repeat(3, minmax(0, 1fr)); 
   }
 }
 
 @media (max-width:520px){
   .idLine{ 
-    grid-template-columns:repeat(2, minmax(0, 1fr)); /* 2 colunas em mobile (3 linhas) */
-  }
-  .miniRow{ 
-    flex-direction:column; 
+    grid-template-columns:repeat(2, minmax(0, 1fr)); 
   }
 }

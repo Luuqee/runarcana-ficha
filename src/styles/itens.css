@@ -1,0 +1,420 @@
+/* ==========================================
+   ITENS.CSS - Moedas, Carga e Inventário
+   ========================================== */
+
+.tabItens{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* ===== CARDS GERAIS ===== */
+.rkCardMoedas,
+.rkCardCarga,
+.rkCardInventario{
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(214,179,90,0.14);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(214,179,90,0.12) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.20));
+  box-shadow: 0 6px 18px rgba(0,0,0,0.30);
+}
+
+.rkCardTitle{
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  font-weight: 900;
+  color: var(--gold);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+/* ===== MOEDAS ===== */
+.rkMoedasGrid{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.rkMoeda{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.rkMoedaIcon{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 12px;
+  border: 2px solid rgba(0,0,0,0.40);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.30);
+}
+
+.rkMoedaIcon.platina{
+  background: linear-gradient(135deg, #e5e4e2 0%, #c0c0c0 100%);
+  color: #333;
+}
+
+.rkMoedaIcon.ouro{
+  background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+  color: #333;
+}
+
+.rkMoedaIcon.electro{
+  background: linear-gradient(135deg, #4a90e2 0%, #f4d03f 100%);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.50);
+}
+
+.rkMoedaIcon.prata{
+  background: linear-gradient(135deg, #d3d3d3 0%, #a9a9a9 100%);
+  color: #333;
+}
+
+.rkMoedaIcon.cobre{
+  background: linear-gradient(135deg, #b87333 0%, #9c5a2f 100%);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.50);
+}
+
+.rkMoedaLabel{
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--fg);
+  opacity: 0.85;
+}
+
+.rkMoeda input{
+  width: 100%;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(214,179,90,0.18);
+  color: var(--fg);
+  text-align: center;
+  outline: none;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.rkMoeda input:focus{
+  border-color: rgba(214,179,90,0.55);
+}
+
+.rkRiquezaTotal{
+  text-align: center;
+  padding: 12px;
+  background: rgba(214,179,90,0.10);
+  border-radius: 8px;
+  border: 1px solid rgba(214,179,90,0.25);
+  font-size: 13px;
+  color: var(--gold);
+}
+
+.rkRiquezaTotal strong{
+  font-weight: 900;
+  margin-right: 8px;
+}
+
+/* ===== CAPACIDADE DE CARGA ===== */
+.rkCargaInfo{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.rkCargaLinha{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--fg);
+}
+
+.rkCargaLinha strong{
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.rkCargaHint{
+  font-size: 10px;
+  opacity: 0.65;
+  margin-left: 6px;
+}
+
+.rkCargaBarra{
+  width: 100%;
+  height: 24px;
+  background: rgba(0,0,0,0.40);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(214,179,90,0.20);
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.rkCargaPreenchimento{
+  height: 100%;
+  transition: width 0.3s ease, background 0.3s ease;
+  border-radius: 12px;
+}
+
+.rkCargaPercentual{
+  text-align: center;
+  font-weight: 900;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.rkCargaAviso{
+  padding: 10px;
+  background: rgba(255,68,68,0.15);
+  border: 1px solid rgba(255,68,68,0.35);
+  border-radius: 8px;
+  color: #ff4444;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.rkCargaLimites{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: rgba(0,0,0,0.20);
+  border-radius: 8px;
+}
+
+.rkCargaLimite{
+  font-size: 11px;
+  color: var(--fg);
+  opacity: 0.85;
+}
+
+.rkCargaLimite strong{
+  font-weight: 900;
+  margin-right: 6px;
+}
+
+.rkCargaDetalhes{
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--fg);
+  opacity: 0.75;
+}
+
+/* ===== INVENTÁRIO (EXPANSÍVEL) ===== */
+.rkInventarioTopo{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.rkBtnAdd{
+  padding: 8px 16px;
+  background: rgba(214,179,90,0.20);
+  border: 1px solid rgba(214,179,90,0.40);
+  border-radius: 8px;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rkBtnAdd:hover{
+  background: rgba(214,179,90,0.30);
+  border-color: rgba(214,179,90,0.60);
+}
+
+.rkInventarioVazio{
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--fg);
+  opacity: 0.50;
+  font-size: 13px;
+}
+
+.itemsList{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itemCard{
+  border-radius: 8px;
+  border: 1px solid rgba(214,179,90,0.14);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(214,179,90,0.08) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.15));
+  transition: all 0.2s ease;
+}
+
+.itemCard:hover{
+  border-color: rgba(214,179,90,0.25);
+}
+
+.itemCard.open{
+  border-color: rgba(214,179,90,0.35);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(214,179,90,0.12) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.18));
+}
+
+.itemHeader{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.itemToggle{
+  color: var(--gold);
+  font-size: 12px;
+  min-width: 16px;
+  transition: transform 0.2s ease;
+}
+
+.itemNome{
+  flex: 1;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--fg);
+}
+
+.itemQtd{
+  font-size: 12px;
+  color: var(--gold);
+  opacity: 0.85;
+  padding: 4px 10px;
+  background: rgba(214,179,90,0.15);
+  border-radius: 12px;
+}
+
+.itemBody{
+  padding: 0 14px 14px 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.itemInfo{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itemInfoRow{
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--fg);
+}
+
+.itemLabel{
+  font-weight: 700;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+.itemDescricao{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.itemDescricao p{
+  margin: 0;
+  font-size: 12px;
+  color: var(--fg);
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.itemActions{
+  display: flex;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(214,179,90,0.12);
+}
+
+.btnEditar,
+.btnRemover{
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnEditar{
+  background: rgba(214,179,90,0.15);
+  border-color: rgba(214,179,90,0.35);
+  color: var(--gold);
+}
+
+.btnEditar:hover{
+  background: rgba(214,179,90,0.25);
+  border-color: rgba(214,179,90,0.55);
+}
+
+.btnRemover{
+  background: rgba(255,68,68,0.10);
+  border-color: rgba(255,68,68,0.25);
+  color: #ff6666;
+}
+
+.btnRemover:hover{
+  background: rgba(255,68,68,0.20);
+  border-color: rgba(255,68,68,0.45);
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 980px){
+  .rkMoedasGrid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .rkInventarioCabecalho,
+  .rkInventarioItem{
+    grid-template-columns: 2fr 60px 80px 90px 70px 100px;
+    gap: 8px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 640px){
+  .rkMoedasGrid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .rkInventarioCabecalho,
+  .rkInventarioItem{
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  
+  .rkItemAcoes{
+    justify-content: flex-start;
+  }
+}
