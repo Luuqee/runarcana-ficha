@@ -1,0 +1,123 @@
+/* src/styles/personagemCard.css */
+.personagemCard {
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.08), rgba(214, 179, 90, 0.03));
+  border: 1px solid rgba(214, 179, 90, 0.20);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.20);
+}
+
+.personagemCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(214, 179, 90, 0.40);
+  box-shadow: 0 8px 30px rgba(214, 179, 90, 0.15);
+}
+
+.personagemAvatar {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.30);
+  border: 2px solid rgba(214, 179, 90, 0.30);
+}
+
+.personagemAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.personagemInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.personagemNome {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+  color: var(--fg);
+  line-height: 1.2;
+}
+
+.personagemStats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.personagemClasse {
+  background: rgba(214, 179, 90, 0.20);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(214, 179, 90, 0.30);
+}
+
+.personagemNivel {
+  background: rgba(255, 255, 255, 0.10);
+  color: var(--fg);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.personagemData {
+  font-size: 12px;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.personagemActions {
+  display: flex;
+  gap: 10px;
+}
+
+.btnAbrirFicha {
+  flex: 1;
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnAbrirFicha:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(214, 179, 90, 0.30);
+}
+
+.btnMenu {
+  width: 44px;
+  height: 44px;
+  background: rgba(178, 33, 33, 0.20);
+  border: 1px solid rgba(178, 33, 33, 0.40);
+  color: #ff6b6b;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnMenu:hover {
+  background: rgba(178, 33, 33, 0.30);
+  border-color: rgba(178, 33, 33, 0.60);
+}

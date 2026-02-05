@@ -2,7 +2,7 @@
    MODALS.CSS - Todos os Modais
    ========================================== */
 
-/* ===== MODAL RK (FIX DEFINITIVO) ===== */
+/* ===== MODALS ANTIGOS (ATAQUES, MAGIAS, ETC) ===== */
 .rkModalOverlay{
   position: fixed;
   inset: 0;
@@ -14,7 +14,6 @@
   z-index: 999999;
   padding: 16px;
 }
-
 .rkModalCard{
   width: min(720px, calc(100% - 26px));
   border-radius: 16px;
@@ -25,7 +24,6 @@
   position: relative;
   z-index: 1000000;
 }
-
 .rkModalHeader{
   display:flex;
   align-items:center;
@@ -33,14 +31,12 @@
   gap: 12px;
   margin-bottom: 12px;
 }
-
 .rkModalHeader h3{
   margin:0;
   font-size:16px;
   font-weight:900;
   color:#fff;
 }
-
 .rkModalX{
   width: 34px;
   height: 34px;
@@ -51,12 +47,10 @@
   cursor: pointer;
   font-weight: 900;
 }
-
 .rkModalBody{ 
   display:grid; 
   gap: 10px; 
 }
-
 .rkField span{
   display:block;
   font-size:11px;
@@ -65,19 +59,16 @@
   margin-bottom: 6px;
   font-weight: 900;
 }
-
 .rkGrid2{ 
   display:grid; 
   gap:10px; 
   grid-template-columns: 1fr 1fr; 
 }
-
 .rkGrid3{ 
   display:grid; 
   gap:10px; 
   grid-template-columns: 1fr 1fr 1fr; 
 }
-
 .rkModalBody input,
 .rkModalBody select,
 .rkModalBody textarea{
@@ -92,21 +83,18 @@
   font-weight:650;
   font-family: inherit;
 }
-
 .rkModalBody textarea{
   height:auto;
   min-height:140px;
   resize: vertical;
   padding:10px 10px;
 }
-
 .rkModalFooter{
   display:flex;
   justify-content:flex-end;
   gap:10px;
   margin-top: 12px;
 }
-
 .rkBtnGhost{
   height:38px;
   padding:0 14px;
@@ -117,7 +105,6 @@
   cursor:pointer;
   font-weight:800;
 }
-
 .rkBtnPrimary{
   height:38px;
   padding:0 14px;
@@ -128,13 +115,11 @@
   cursor:pointer;
   font-weight:900;
 }
-
 .rkHint{
   font-size:11px;
   opacity:.70;
 }
 
-/* ===== MODAL ANTIGO (OVERLAY) ===== */
 .overlay{
   position:fixed;
   inset:0;
@@ -145,7 +130,6 @@
   justify-content:center;
   z-index:50;
 }
-
 .modal{
   width:min(720px, calc(100% - 26px));
   border-radius:16px;
@@ -154,25 +138,21 @@
   box-shadow: 0 18px 60px rgba(0,0,0,0.60);
   padding:16px;
 }
-
 .modal h3{
   margin:0 0 12px;
   font-size:16px;
   font-weight:900;
   color:#fff;
 }
-
 .grid1{
   display:grid;
   gap:10px;
 }
-
 .grid2{
   display:grid;
   gap:10px;
   grid-template-columns: 1fr 1fr;
 }
-
 .modal input,
 .modal select,
 .modal textarea{
@@ -187,28 +167,24 @@
   font-weight:650;
   font-family: inherit;
 }
-
 .modal textarea{
   height:auto;
   min-height:140px;
   resize: vertical;
   padding:10px 10px;
 }
-
 .modal input:focus,
 .modal select:focus,
 .modal textarea:focus{
   border-color: rgba(214,179,90,0.55);
   box-shadow: 0 0 0 2px rgba(214,179,90,0.10);
 }
-
 .modalBtns{
   display:flex;
   justify-content:flex-end;
   gap:10px;
   margin-top:12px;
 }
-
 .modalBtns button{
   height:38px;
   padding:0 14px;
@@ -219,18 +195,214 @@
   cursor:pointer;
   font-weight:800;
 }
-
 .modalBtns button:hover{
   border-color: rgba(255,255,255,0.26);
   background: rgba(255,255,255,0.08);
 }
-
 .hint{
   font-size:11px;
   opacity:.70;
 }
 
+/* ===== NOVOS MODAIS (SISTEMA DE PERSONAGENS) ===== */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.10), rgba(214, 179, 90, 0.05));
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.50);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+  margin-bottom: 20px;
+}
+
+.modalHeader h2 {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0;
+  color: var(--fg);
+}
+
+.modalClose {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 8px;
+  color: var(--fg);
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.modalClose:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: rotate(90deg);
+}
+
+.modalForm {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.formGroup input,
+.formGroup select {
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 8px;
+  color: var(--fg);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+  border-color: rgba(214, 179, 90, 0.50);
+  box-shadow: 0 0 8px rgba(214, 179, 90, 0.15);
+}
+
+.formGroup select {
+  cursor: pointer;
+}
+
+.formHint {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: -4px;
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btnSecondary {
+  flex: 1;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  color: var(--fg);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnSecondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btnSecondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnPrimary {
+  flex: 1;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(214, 179, 90, 0.30);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.errorMsg {
+  background: rgba(178, 33, 33, 0.20);
+  border: 1px solid rgba(178, 33, 33, 0.40);
+  color: #ff6b6b;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Scrollbar do modal */
+.modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.20);
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: rgba(214, 179, 90, 0.30);
+  border-radius: 4px;
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+  background: rgba(214, 179, 90, 0.50);
+}
+
 /* RESPONSIVO */
+@media (max-width:768px){
+  .modalHeader h2 {
+    font-size: 20px;
+  }
+  
+  .modalActions {
+    flex-direction: column;
+  }
+}
+
 @media (max-width:520px){
   .rkGrid2, 
   .rkGrid3{ 

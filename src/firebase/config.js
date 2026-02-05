@@ -4,7 +4,7 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBQW1E6Df_H_Y8K2Yxd3-WBS8ZMbER4Lz8",
+  apiKey: "AIzaSyBQW1E6Df_H_Y8K2t9d3-WBSBZMbER4Lz8",
   authDomain: "runarcana-fichas.firebaseapp.com",
   projectId: "runarcana-fichas",
   storageBucket: "runarcana-fichas.firebasestorage.app",

@@ -1,0 +1,430 @@
+/* src/styles/campanhas.css */
+.campanhasPage {
+  min-height: calc(100vh - 60px);
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Loading */
+.loadingCampanhas {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(214, 179, 90, 0.20);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Header */
+.campanhasHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.campanhasHeader h1 {
+  font-size: 40px;
+  font-weight: 900;
+  margin: 0;
+  color: var(--fg);
+}
+
+.campanhasSubtitle {
+  font-size: 16px;
+  opacity: 0.7;
+  margin: 8px 0 0;
+}
+
+.campanhasHeaderActions {
+  display: flex;
+  gap: 12px;
+}
+
+.btnHeaderEntrar,
+.btnHeaderNova {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnHeaderEntrar {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(214, 179, 90, 0.30);
+  color: var(--gold);
+}
+
+.btnHeaderEntrar:hover {
+  background: rgba(214, 179, 90, 0.15);
+  border-color: rgba(214, 179, 90, 0.50);
+}
+
+.btnHeaderNova {
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  box-shadow: 0 4px 15px rgba(214, 179, 90, 0.25);
+}
+
+.btnHeaderNova:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(214, 179, 90, 0.35);
+}
+
+/* Alert de campanha criada */
+.alertCampanhaCriada {
+  background: linear-gradient(135deg, rgba(50, 205, 50, 0.12), rgba(50, 205, 50, 0.05));
+  border: 2px solid rgba(50, 205, 50, 0.35);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.alertHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.alertHeader h3 {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+  color: #50fa7b;
+}
+
+.alertHeader button {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 8px;
+  color: var(--fg);
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.alertCampanhaCriada p {
+  font-size: 14px;
+  opacity: 0.85;
+  margin: 0 0 12px;
+}
+
+.codigoBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.30);
+  border: 2px solid rgba(214, 179, 90, 0.40);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.codigo {
+  flex: 1;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+
+.btnCopiarCodigo {
+  background: rgba(214, 179, 90, 0.20);
+  border: 1px solid rgba(214, 179, 90, 0.40);
+  color: var(--gold);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnCopiarCodigo:hover {
+  background: rgba(214, 179, 90, 0.30);
+}
+
+.alertCampanhaCriada small {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Estado vazio */
+.campanhasVazio {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.vazioIcon {
+  font-size: 80px;
+  opacity: 0.4;
+  margin-bottom: 24px;
+}
+
+.campanhasVazio h2 {
+  font-size: 28px;
+  font-weight: 900;
+  margin: 0 0 12px;
+  color: var(--fg);
+}
+
+.campanhasVazio p {
+  font-size: 16px;
+  opacity: 0.7;
+  margin: 0 0 32px;
+}
+
+.vazioActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnVazioEntrar,
+.btnVazioCriar {
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnVazioEntrar {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(214, 179, 90, 0.30);
+  color: var(--gold);
+}
+
+.btnVazioEntrar:hover {
+  background: rgba(214, 179, 90, 0.15);
+}
+
+.btnVazioCriar {
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+}
+
+.btnVazioCriar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(214, 179, 90, 0.35);
+}
+
+/* Grid de campanhas */
+.campanhasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
+}
+
+.campanhaCard {
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.08), rgba(214, 179, 90, 0.03));
+  border: 1px solid rgba(214, 179, 90, 0.20);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.campanhaCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(214, 179, 90, 0.40);
+  box-shadow: 0 8px 30px rgba(214, 179, 90, 0.15);
+}
+
+.campanhaRole {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.campanhaRole.mestre {
+  background: rgba(255, 215, 0, 0.20);
+  border: 1px solid rgba(255, 215, 0, 0.40);
+  color: #ffd700;
+}
+
+.campanhaRole.jogador {
+  background: rgba(100, 149, 237, 0.20);
+  border: 1px solid rgba(100, 149, 237, 0.40);
+  color: #6495ed;
+}
+
+.campanhaNome {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0 0 12px;
+  color: var(--fg);
+  padding-right: 120px;
+}
+
+.campanhaDescricao {
+  font-size: 14px;
+  opacity: 0.7;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.campanhaInfoBox {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.infoRow span {
+  opacity: 0.7;
+}
+
+.infoRow strong {
+  font-weight: 700;
+}
+
+.codigoValue {
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.btnAbrirCampanha {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnAbrirCampanha:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(214, 179, 90, 0.30);
+}
+
+/* Estilos adicionais para modais */
+.campanhaEncontrada {
+  background: linear-gradient(135deg, rgba(50, 205, 50, 0.12), rgba(50, 205, 50, 0.05));
+  border: 2px solid rgba(50, 205, 50, 0.30);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.campanhaEncontrada h3 {
+  font-size: 16px;
+  font-weight: 900;
+  margin: 0 0 12px;
+  color: #50fa7b;
+}
+
+.campanhaInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.infoItem span {
+  opacity: 0.7;
+}
+
+.campanhaDescricao {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  font-size: 13px;
+  opacity: 0.85;
+  font-style: italic;
+}
+
+.semPersonagens {
+  background: rgba(255, 100, 100, 0.10);
+  border: 1px solid rgba(255, 100, 100, 0.30);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.semPersonagens p {
+  margin: 0 0 8px;
+  font-weight: 700;
+  color: #ff6b6b;
+}
+
+.semPersonagens small {
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .campanhasHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .campanhasHeader h1 {
+    font-size: 32px;
+  }
+
+  .campanhasHeaderActions {
+    flex-direction: column;
+  }
+
+  .campanhasGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .codigoBox {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .codigo {
+    text-align: center;
+    font-size: 24px;
+  }
+}

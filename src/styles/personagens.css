@@ -1,0 +1,199 @@
+/* src/styles/personagens.css */
+.personagensPage {
+  min-height: calc(100vh - 60px);
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.personagensHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.personagensHeader h1 {
+  font-size: 36px;
+  font-weight: 900;
+  margin: 0;
+  color: var(--fg);
+}
+
+.personagensCount {
+  font-size: 16px;
+  opacity: 0.7;
+  margin: 8px 0 0;
+}
+
+.btnNovoPersonagem {
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 900;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(214, 179, 90, 0.30);
+}
+
+.btnNovoPersonagem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(214, 179, 90, 0.40);
+}
+
+/* Loading */
+.loadingScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(214, 179, 90, 0.20);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Estado vazio */
+.personagensVazio {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.vazioIcon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.personagensVazio h2 {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--fg);
+  margin: 0 0 12px;
+}
+
+.personagensVazio p {
+  font-size: 16px;
+  opacity: 0.7;
+  margin: 0 0 30px;
+}
+
+.btnVazioCreate {
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 900;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnVazioCreate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(214, 179, 90, 0.40);
+}
+
+/* Grid de personagens */
+.personagensGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Modal de Delete */
+.modalDelete {
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.10), rgba(214, 179, 90, 0.05));
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.40);
+}
+
+.modalDelete h2 {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0 0 16px;
+  color: var(--fg);
+}
+
+.modalDelete p {
+  font-size: 16px;
+  margin: 0 0 12px;
+  line-height: 1.6;
+}
+
+.deleteWarning {
+  color: #ff6b6b;
+  font-weight: 700;
+  font-size: 14px !important;
+  margin-top: 16px !important;
+}
+
+.deleteActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btnCancelar {
+  flex: 1;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  color: var(--fg);
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnCancelar:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btnConfirmarDelete {
+  flex: 1;
+  padding: 12px;
+  background: #b22121;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnConfirmarDelete:hover {
+  background: #d42828;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .personagensHeader h1 {
+    font-size: 28px;
+  }
+  
+  .personagensGrid {
+    grid-template-columns: 1fr;
+  }
+}

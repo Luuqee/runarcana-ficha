@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Personagens from './pages/Personagens';
 import Campanhas from './pages/Campanhas';
+import FichaPersonagem from './pages/FichaPersonagem';
 import './styles/base.css';
 
 // Rota protegida (precisa estar logado)
@@ -32,6 +33,15 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <Personagens />
+            </ProtectedRoute>
+          } 
+        />
+        
+        <Route 
+          path="/ficha/:id" 
+          element={
+            <ProtectedRoute>
+              <FichaPersonagem />
             </ProtectedRoute>
           } 
         />
