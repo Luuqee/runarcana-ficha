@@ -1,0 +1,427 @@
+/* src/styles/dashboardMestre.css */
+.dashboardMestre {
+  min-height: calc(100vh - 60px);
+  padding: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Loading */
+.loadingDashboard {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Header */
+.dashboardHeader {
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.10), rgba(214, 179, 90, 0.05));
+  border: 1px solid rgba(214, 179, 90, 0.25);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.btnVoltar {
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  color: var(--fg);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btnVoltar:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(-2px);
+}
+
+.dashboardHeaderInfo {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.headerTitulo h1 {
+  font-size: 32px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  color: var(--fg);
+}
+
+.headerTitulo p {
+  font-size: 14px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.headerStats {
+  display: flex;
+  gap: 24px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 24px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  border: 1px solid rgba(214, 179, 90, 0.20);
+}
+
+.statLabel {
+  font-size: 12px;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--gold);
+}
+
+/* Código da Campanha */
+.codigoSection {
+  margin-bottom: 32px;
+}
+
+.codigoCard {
+  background: linear-gradient(135deg, rgba(100, 149, 237, 0.12), rgba(100, 149, 237, 0.05));
+  border: 2px solid rgba(100, 149, 237, 0.30);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.codigoInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.codigoLabel {
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.codigoToggle {
+  background: rgba(0, 0, 0, 0.30);
+  border: 2px solid rgba(214, 179, 90, 0.40);
+  color: var(--gold);
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 180px;
+}
+
+.codigoToggle:hover {
+  background: rgba(0, 0, 0, 0.40);
+  border-color: rgba(214, 179, 90, 0.60);
+}
+
+.btnCopiarCodigo {
+  background: rgba(100, 149, 237, 0.20);
+  border: 1px solid rgba(100, 149, 237, 0.40);
+  color: #6495ed;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btnCopiarCodigo:hover {
+  background: rgba(100, 149, 237, 0.30);
+}
+
+/* Seção de Jogadores */
+.jogadoresSection {
+  margin-bottom: 32px;
+}
+
+.sectionHeader {
+  margin-bottom: 20px;
+}
+
+.sectionHeader h2 {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0;
+  color: var(--fg);
+}
+
+/* Sem jogadores */
+.semJogadores {
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.08), rgba(214, 179, 90, 0.03));
+  border: 2px dashed rgba(214, 179, 90, 0.25);
+  border-radius: 16px;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.semJogadoresIcon {
+  font-size: 64px;
+  opacity: 0.4;
+  margin-bottom: 16px;
+}
+
+.semJogadores h3 {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  color: var(--fg);
+}
+
+.semJogadores p {
+  font-size: 14px;
+  opacity: 0.7;
+  margin: 0 0 24px;
+}
+
+.btnCompartilhar {
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnCompartilhar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(214, 179, 90, 0.30);
+}
+
+/* Grid de Jogadores */
+.jogadoresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.jogadorCard {
+  background: linear-gradient(135deg, rgba(214, 179, 90, 0.08), rgba(214, 179, 90, 0.03));
+  border: 1px solid rgba(214, 179, 90, 0.20);
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.jogadorCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(214, 179, 90, 0.40);
+  box-shadow: 0 8px 30px rgba(214, 179, 90, 0.15);
+}
+
+/* Jogador sem personagem */
+.jogadorSemPersonagem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.avatarPlaceholder {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(255, 255, 255, 0.20);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  opacity: 0.4;
+}
+
+.jogadorStatus {
+  font-size: 13px;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+/* Jogador com personagem */
+.jogadorAvatar {
+  width: 100%;
+  height: 180px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(214, 179, 90, 0.30);
+}
+
+.jogadorAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.jogadorInfo {
+  margin-bottom: 16px;
+}
+
+.jogadorInfo h3 {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0 4px;
+  color: var(--fg);
+}
+
+.jogadorClasse {
+  font-size: 13px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* Stats (Vida e Mana) */
+.jogadorStats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.statBar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statBarLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.statBar.vida .statBarLabel {
+  color: #ff6b6b;
+}
+
+.statBar.mana .statBarLabel {
+  color: #4dabf7;
+}
+
+.statBarBg {
+  height: 8px;
+  background: rgba(0, 0, 0, 0.30);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.statBarFill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.statBar.vida .statBarFill {
+  background: linear-gradient(90deg, #ff6b6b, #fa5252);
+}
+
+.statBar.mana .statBarFill {
+  background: linear-gradient(90deg, #4dabf7, #339af0);
+}
+
+.btnAbrirFicha {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), #c9a354);
+  color: #0a0a0a;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnAbrirFicha:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(214, 179, 90, 0.30);
+}
+
+/* Ações da Campanha */
+.acoesSection {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  display: flex;
+  justify-content: center;
+}
+
+.btnDeletar {
+  background: rgba(178, 33, 33, 0.15);
+  border: 1px solid rgba(178, 33, 33, 0.40);
+  color: #ff6b6b;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnDeletar:hover {
+  background: rgba(178, 33, 33, 0.25);
+  border-color: rgba(178, 33, 33, 0.60);
+}
+
+@media (max-width: 768px) {
+  .dashboardHeader {
+    flex-direction: column;
+  }
+  
+  .dashboardHeaderInfo {
+    flex-direction: column;
+  }
+  
+  .headerStats {
+    width: 100%;
+    justify-content: space-around;
+  }
+  
+  .codigoCard {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .codigoInfo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .jogadoresGrid {
+    grid-template-columns: 1fr;
+  }
+}

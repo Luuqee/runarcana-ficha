@@ -7,6 +7,8 @@ import Login from './pages/Login';
 import Personagens from './pages/Personagens';
 import Campanhas from './pages/Campanhas';
 import FichaPersonagem from './pages/FichaPersonagem';
+import DashboardMestre from './pages/DashboardMestre';
+import MesaJogador from './pages/MesaJogador';
 import './styles/base.css';
 
 // Rota protegida (precisa estar logado)
@@ -51,6 +53,24 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <Campanhas />
+            </ProtectedRoute>
+          } 
+        />
+        
+        <Route 
+          path="/campanha/:id/mestre" 
+          element={
+            <ProtectedRoute>
+              <DashboardMestre />
+            </ProtectedRoute>
+          } 
+        />
+        
+        <Route 
+          path="/campanha/:id" 
+          element={
+            <ProtectedRoute>
+              <MesaJogador />
             </ProtectedRoute>
           } 
         />

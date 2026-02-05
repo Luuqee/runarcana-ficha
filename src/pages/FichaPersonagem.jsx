@@ -1,6 +1,6 @@
 // src/pages/FichaPersonagem.jsx
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getPersonagem, updateFicha } from '../firebase/firestore';
 import CharacterSheet from './CharacterSheet';
@@ -9,6 +9,7 @@ import '../styles/fichaPersonagem.css';
 export default function FichaPersonagem() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   const [personagem, setPersonagem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -114,7 +115,15 @@ export default function FichaPersonagem() {
     <div className="fichaPersonagemPage">
       {/* Header com info do personagem */}
       <div className="fichaHeader">
-        <button onClick={() => navigate('/personagens')} className="btnVoltarFicha">
+        <button onClick={() => {
+          // Se veio de uma campanha, volta pra ela
+          if (location.state?.from) {
+            navigate(location.state.from);
+          } else {
+            // Senão, volta pra personagens
+            navigate('/personagens');
+          }
+        }} className="btnVoltarFicha">
           ← Voltar
         </button>
 

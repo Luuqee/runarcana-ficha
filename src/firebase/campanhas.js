@@ -81,6 +81,23 @@ export const criarCampanha = async (mestreId, mestreNome, dados) => {
   }
 };
 
+// Buscar campanha por ID
+export const getCampanha = async (campanhaId) => {
+  try {
+    const campanhaRef = doc(db, 'campanhas', campanhaId);
+    const campanhaSnap = await getDoc(campanhaRef);
+    
+    if (!campanhaSnap.exists()) {
+      return { success: false, error: 'Campanha não encontrada' };
+    }
+    
+    return { success: true, campanha: { id: campanhaSnap.id, ...campanhaSnap.data() } };
+  } catch (error) {
+    console.error('Erro ao buscar campanha:', error);
+    return { success: false, error: error.message };
+  }
+};
+
 // Buscar campanha por código
 export const buscarCampanhaPorCodigo = async (codigo) => {
   try {
