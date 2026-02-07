@@ -1,7 +1,6 @@
 // src/pages/FichaPersonagem.jsx
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import { getPersonagem, updateFicha } from '../firebase/firestore';
 import CharacterSheet from './CharacterSheet';
 import '../styles/fichaPersonagem.css';
@@ -10,7 +9,6 @@ export default function FichaPersonagem() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
   const [personagem, setPersonagem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,13 +20,7 @@ export default function FichaPersonagem() {
     const result = await getPersonagem(id);
 
     if (result.success) {
-      // Verificar se o personagem pertence ao usuário
-      if (result.personagem.userId !== user.uid) {
-        setError('Você não tem permissão para acessar este personagem');
-        setLoading(false);
-        return;
-      }
-
+      // ✅ PERMITIR ACESSO (Mestre pode ver/editar fichas dos jogadores)
       setPersonagem(result.personagem);
     } else {
       setError(result.error || 'Personagem não encontrado');
