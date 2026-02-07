@@ -1,6 +1,7 @@
 // src/pages/CharacterSheet.jsx - VERSÃO REFATORADA
 import { useMemo } from "react";
 import "../styles/sheet.css";
+import "../styles/ItemModal.css";
 
 import {
   defaultState,
@@ -26,6 +27,7 @@ import { useAttackModals } from "../hooks/useAttackModals";
 import usePowerModals from "../hooks/usePowerModals";
 import { useSpellModals } from "../hooks/useSpellModals";
 import useMysteryModals, { useItemModals, useEscapeKey } from "../hooks/useCharacterModals";
+import { useRuneModals } from "../hooks/useRuneModals";
 
 // Componentes de abas
 import TabsHeader from "../components/sheets/TabsHeader.jsx";
@@ -43,6 +45,8 @@ import PowerModal from "../components/modals/PowerModal.jsx";
 import SpellModal from "../components/modals/SpellModal.jsx";
 import MysteryModal from "../components/modals/MysteryModal.jsx";
 import ItemModal from "../components/modals/ItemModal.jsx";
+import PulseModal from "../components/modals/PulseModal.jsx";
+import RuneModal from "../components/modals/RuneModal.jsx";
 
 // Componentes dos painéis
 import LeftPanel from "../components/sheets/LeftPanel.jsx";
@@ -80,6 +84,7 @@ export default function CharacterSheet({ initialState = null, onUpdate = null, p
   const spellModals = useSpellModals({ magias, update });
   const mysteryModals = useMysteryModals({ misterios, update });
   const itemModals = useItemModals({ inventario, update });
+  const runeModals = useRuneModals({ runas, update });
 
   // Elementos e mapas
   const elementByKey = useMemo(() => buildElementMap(ELEMENTOS), []);
@@ -92,6 +97,8 @@ export default function CharacterSheet({ initialState = null, onUpdate = null, p
     spellModals.fecharModalMagia,
     mysteryModals.fecharModalMisterio,
     itemModals.fecharModalItem,
+    runeModals.fecharModalPulso,
+    runeModals.fecharModalRuna,
   ]);
 
   return (
@@ -203,6 +210,15 @@ export default function CharacterSheet({ initialState = null, onUpdate = null, p
                 prof={prof}
                 nivel={nivel}
                 update={update}
+                openPulse={runeModals.openPulse}
+                setOpenPulse={runeModals.setOpenPulse}
+                openRuna={runeModals.openRuna}
+                setOpenRuna={runeModals.setOpenRuna}
+                abrirModalPulso={runeModals.abrirModalPulso}
+                removerPulso={runeModals.removerPulso}
+                abrirModalRuna={runeModals.abrirModalRuna}
+                editarRuna={runeModals.editarRuna}
+                removerRuna={runeModals.removerRuna}
               />
             )}
 
@@ -278,6 +294,21 @@ export default function CharacterSheet({ initialState = null, onUpdate = null, p
         item={itemModals.itemToEdit}
         onClose={itemModals.fecharModalItem}
         onSave={itemModals.salvarItem}
+      />
+
+      <PulseModal
+        open={runeModals.showPulseModal}
+        onClose={runeModals.fecharModalPulso}
+        onSave={runeModals.salvarPulso}
+        currentKey={runas?.pulso?.key || ""}
+      />
+
+      <RuneModal
+        open={runeModals.showRuneModal}
+        title={runeModals.editRunaId ? "Editar Runa" : "Adicionar Runa"}
+        onClose={runeModals.fecharModalRuna}
+        onSave={runeModals.salvarRuna}
+        initial={runeModals.runaToEdit}
       />
     </div>
   );
